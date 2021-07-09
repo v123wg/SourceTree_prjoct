@@ -1,0 +1,105 @@
+﻿@model IPagedList<PastaOrderfood.Models.Users>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "UserManageIndex";
+    Layout = "~/Views/Shared/_LayoutBackend.cshtml";
+}
+
+@section scripts{
+
+    <script>
+        //#region ajax會員搜尋
+        $(document).ready(function () {
+            console.log("ready");
+            $("#Search").keyup(function () {
+                var SearchBy = $("#SearchBy").val();
+                var SearchValue = $("#Search").val();
+                var SetData = $("#DataSearching");
+                SetData.html("");
+                $.ajax({
+                    type: "post",
+                    url: "GetSearchData?SearchBy=" + SearchBy + "&SearchValue=" + SearchValue,
+                    contentType: "html",
+                    success: function (result) {
+                        //刷新單區塊
+                        $("#tpg").load(location.href + " #tpg");
+                        $("#pgld").load(location.href + " #pgld");
+                    }
+                })
+            })
+        })
+        //#endregion
+    </script>
+}
+
+
+<div class="container">
+    <h2 class="text-center">會員管理</h2>
+    <br />
+
+    <div class="row m-0">
+        <label>搜尋</label>
+    </div>
+    <div class="row m-0">
+        <select id="SearchBy" class="form-control">
+            <option value="mno">帳號</option>
+            <option value="mname">名字</option>
+            <option value="email">信箱</option>
+            <option value="role_no">權限</option>
+        </select>
+
+        <div>
+            <input class="form-control" placeholder="請輸入欲搜尋項目" id="Search" />
+        </div>
+    </div>
+
+
+
+
+
+    <br /><br />
+    <div id="tpg">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().mno)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().mname)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().email)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().role_no)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().birthday)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().remark)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().isvarify)</th>
+                </tr>
+            </thead>
+            <tbody id="DataSearching">
+                @foreach (var Item in Model)
+                {
+                    <tr>
+                        <td>@Item.mno</td>
+                        <td>@Item.mname</td>
+                        <td>@Item.email</td>
+                        <td>@Item.role_no</td>
+                        <td>@Item.birthday</td>
+                        <td>@Item.remark</td>
+                        <td>@Item.isvarify</td>
+                        <td>
+                            @Html.ActionLink("編輯", "UserManageEdit", new { rowid = Item.rowid }, new { @class = "btn btn-info" }) 
+                            @Html.ActionLink("刪除", "UserManageDelete", new { rowid = Item.rowid }, new { @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+    <div class="align-content-center" id="pgld">@Html.PagedListPager(Model, page => Url.Action("UserManageIndex", new { page }))</div>
+    <p class="text-center">
+        <button type="button" class="btn btn-outline-primary">@Html.ActionLink("Create New", "UserManageCreate")</button>
+    </p>
+</div>
+
+
+
+

@@ -1,0 +1,131 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <style type="text/css">
+        ul{
+            width: 250px;
+            height: 100%;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            top: 0;
+            left: -250px;
+        }
+        ul li{
+            width: 90%;
+            margin: 50px auto;
+            border-bottom: 1px dashed #666;
+        }
+        ul li:hover{
+            color: orange;
+            cursor: pointer;
+        }
+        ul span
+        {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.7);
+            position: absolute;
+            /* top: 40px; */
+            left: 100%;
+            font-size: 12px;
+            line-height: 40px;
+            border-radius: 0px 20px 20px 0px;
+            cursor: pointer;
+        }
+        @@keyframes showIn {
+            from {
+                margin-left: -250px;
+            }
+            to {
+                margin-left: 0px;
+            }
+        }
+
+        @@keyframes showOut {
+            from {
+                margin-left: 250px;
+            }
+            to {
+                margin-left: 0px;
+            }
+        }
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            $("li").tooltip();
+            let leftNav = 0;
+            $("ul span").click(function () {
+                if (leftNav == 0) {
+                    $(this).html("Close");
+                    $("ul").css({ "animation": "showIn 0.75s", "left": "0px" })
+                    $(this).css("color", "orange")
+                    leftNav = 1;
+                }
+                else {
+                    $(this).html("Open");
+                    $("ul").css({ "animation": "showOut 0.75s", "left": "-250px", "color": "" })
+                    $(this).css("color", "")
+                    leftNav = 0;
+                }
+
+
+            })
+
+        })
+    </script>
+
+
+    <title>介紹2</title>
+</head>
+<body class=" bg-dark">
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2 p-3 text-center " id="intro"> <img src="images/workout3.jpg" class="img-fluid" /></div>
+            <div class="col-12 col-md-8 offset-md-2 mt-3">
+                <h1 class="h2 text-info" id="intro2">基礎體重訓練</h1>
+                <p class="px-3 text-justify text-light" id="intro3">你是否有想過開始運動改變體態？無論是減脂、減重或增加肌耐力！每天只要花10分鐘的時間，你不用買訓練器材只用自己的體重就可以執行，如果你每天都認真執行這樣的計畫，在短時間內就可看到自己身體的改變，但這個訓練不會讓你快速獲得夢想中的身形，尤其是在體重超重的情形之下，不過卻能為你開啟運動的大門。現在就讓我們開始用這5種動作，執行４週的訓練計畫吧！</p>
+            </div>
+
+        </div>
+    </div>
+    <ul class="list-unstyled p-0 text-light text-center">
+        <span>Open</span>
+        <li title="左一下">基礎體重訓練</li>
+        <li title="左一下">飛輪課程介紹</li>
+        <li title="左一下">地板運動操</li>
+        <li title="左一下">進階地板運動操</li>
+        <li title="左一下">輔助器具操作</li>
+        <li title="左一下">風火輪鍛鍊</li>
+        <li title="左一下">返回課程介紹</li>
+    </ul>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    -->
+</body>
+</html>

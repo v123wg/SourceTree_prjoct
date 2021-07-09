@@ -1,0 +1,86 @@
+﻿@model IEnumerable<PastaOrderfood.Models.Cart>
+
+@{
+    ViewBag.Title = "Cart(購物車)";
+    var itemcount = Model.Count();
+}
+@section scripts {
+    <script>
+
+        //#region   餐點數量
+        $(function () {
+            $(".add").click(function () {
+                var t = $(this).prev();
+                t.val(parseInt(t.val()) + 1)
+            })
+            $(".min").click(function () {
+                var t = $(this).next();
+                t.val(parseInt(t.val()) - 1)
+                if (parseInt(t.val()) < 1) {
+                    t.val(1);
+                }
+            })
+        })
+                //#endregion
+
+
+
+    </script>
+
+}
+<h2 class="text-center">Cart</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container mt-5 ">
+        <div class="row bg-light">
+            <div class="col-12 text-center ">
+                <div class="row bg-info">
+                    <div class="col-3 text-light h4">餐點</div>
+                    <div class="col-3 text-light h4">圖片</div>
+                    <div class="col-3 text-light h4">數量</div>
+                    <div class="col-3 text-light h4">單價</div>
+                </div>
+                <div class="row text-center">
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-3 mt-3">@item.pasta_name</div>
+                        <div class="col-3 "><img src="@item.pasta_img" width="75" height="75" multiple /></div>
+                        <div class="col-3 mt-3">
+                            <input class="min" type="button" value="-" />
+                            <input id="text_box" name="q" type="text" value="1" style="width:30px;text-align: center" readonly="readonly"/>
+                            <input class="add" type="button" value="+" />
+                        </div>
+                        <div class="col-3 mt-3">@item.unitprice</div>
+                        <hr />
+                    }
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+
+            </div>
+
+            <div class="col-4 text-right m-0 p-0 ">
+                @Html.ActionLink("清空購物車", "ClearCart", "Home", new { @class = "btn btn-danger " })
+
+                @if (ViewBag.token == false)
+                {
+                    <input class="btn btn-secondary" disabled type="submit" value="下一步" />
+                }
+                else
+                {
+                    <input class="btn btn-success" type="submit" value="下一步" />
+                }
+
+            </div>
+        </div>
+    </div>
+
+
+}

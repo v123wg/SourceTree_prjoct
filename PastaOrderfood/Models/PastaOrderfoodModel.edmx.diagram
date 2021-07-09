@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3f0dad5ece59474a8028db02a79a00b7" Name="Diagram1">
+        <EntityTypeShape EntityType="PastaOrderModel.Categories" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="PastaOrderModel.Order" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="PastaOrderModel.OrderDetail" Width="1.5" PointX="3" PointY="5.625" />
+        <EntityTypeShape EntityType="PastaOrderModel.Pastas" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="PastaOrderModel.Roles" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PastaOrderModel.Users" Width="1.5" PointX="5.75" PointY="3.75" />
+        <AssociationConnector Association="PastaOrderModel.FK_Pastas_Categories" />
+        <AssociationConnector Association="PastaOrderModel.FK_OrderDetail_Order" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

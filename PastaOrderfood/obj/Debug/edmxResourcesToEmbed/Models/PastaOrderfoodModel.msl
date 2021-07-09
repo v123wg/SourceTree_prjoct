@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PastaOrderModelStoreContainer" CdmEntityContainer="PastaOrderEntities">
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="PastaOrderModel.Categories">
+        <MappingFragment StoreEntitySet="Categories">
+          <ScalarProperty Name="category_name" ColumnName="category_name" />
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order">
+      <EntityTypeMapping TypeName="PastaOrderModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="isLogin" ColumnName="isLogin" />
+          <ScalarProperty Name="order_total" ColumnName="order_total" />
+          <ScalarProperty Name="order_payFn" ColumnName="order_payFn" />
+          <ScalarProperty Name="order_fn" ColumnName="order_fn" />
+          <ScalarProperty Name="order_status" ColumnName="order_status" />
+          <ScalarProperty Name="order_date" ColumnName="order_date" />
+          <ScalarProperty Name="order_email" ColumnName="order_email" />
+          <ScalarProperty Name="order_location" ColumnName="order_location" />
+          <ScalarProperty Name="order_phone" ColumnName="order_phone" />
+          <ScalarProperty Name="order_name" ColumnName="order_name" />
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetail">
+      <EntityTypeMapping TypeName="PastaOrderModel.OrderDetail">
+        <MappingFragment StoreEntitySet="OrderDetail">
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="itemId" ColumnName="itemId" />
+          <ScalarProperty Name="orderid" ColumnName="orderid" />
+          <ScalarProperty Name="orderDetalid" ColumnName="orderDetalid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pastas">
+      <EntityTypeMapping TypeName="PastaOrderModel.Pastas">
+        <MappingFragment StoreEntitySet="Pastas">
+          <ScalarProperty Name="pasta_Top" ColumnName="pasta_Top" />
+          <ScalarProperty Name="pasta_sort" ColumnName="pasta_sort" />
+          <ScalarProperty Name="pasta_img" ColumnName="pasta_img" />
+          <ScalarProperty Name="pasta_price" ColumnName="pasta_price" />
+          <ScalarProperty Name="pasta_detail" ColumnName="pasta_detail" />
+          <ScalarProperty Name="pasta_quantity" ColumnName="pasta_quantity" />
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="pasta_name" ColumnName="pasta_name" />
+          <ScalarProperty Name="rowid" ColumnName="rowid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="PastaOrderModel.Roles">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="remark" ColumnName="remark" />
+          <ScalarProperty Name="mname" ColumnName="mname" />
+          <ScalarProperty Name="mno" ColumnName="mno" />
+          <ScalarProperty Name="rowid" ColumnName="rowid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="PastaOrderModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="isvarify" ColumnName="isvarify" />
+          <ScalarProperty Name="varify_code" ColumnName="varify_code" />
+          <ScalarProperty Name="remark" ColumnName="remark" />
+          <ScalarProperty Name="birthday" ColumnName="birthday" />
+          <ScalarProperty Name="role_no" ColumnName="role_no" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="mname" ColumnName="mname" />
+          <ScalarProperty Name="mno" ColumnName="mno" />
+          <ScalarProperty Name="rowid" ColumnName="rowid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

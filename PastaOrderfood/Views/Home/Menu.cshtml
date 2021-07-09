@@ -1,0 +1,220 @@
+﻿@model IEnumerable<PastaOrderfood.Models.Pastas>
+
+@{
+    ViewBag.Title = "Menu(菜單)";
+    var a = ViewBag.cate;
+}
+
+@section scripts {
+    <script>
+
+        //#region nuget套件_toastr改變設定
+
+        toastr.options = {
+            "closeButton": true, // 顯示關閉按鈕
+            "newestOnTop": true,  // 最新一筆顯示在最上面
+            "progressBar": true, // 顯示隱藏時間進度條
+            "extendedTimeOut": "1000", // 當使用者觸碰到提示訊息時，離開後超過此設定時間則隱藏提示訊息(單位: 毫秒)
+            "showEasing": "swing", // 顯示動畫時間曲線
+            "showMethod": "fadeIn", // 顯示動畫效果
+            "hideMethod": "fadeOut" // 隱藏動畫效果
+        }
+        //#endregion
+
+        //#region   列表查詢
+        $(document).ready(function () {
+            $("#SearchToken table tr td div a").click(function () {
+                //var SearchValue = $("#Search").val();
+                var SearchValue = $(this).children().text()
+                var SetData = $("#DataSearching");
+                console.log(SearchValue);
+                SetData.html("");
+                $.ajax({
+                    type: "post",
+                    url: "GetCategoriesSearchData?SearchValue=" + SearchValue,
+                    contentType: "html",
+                    success: function (result) {
+                        if (result.length == 0) {
+                            console.log("<tr><td>查詢沒有結果</td></tr>");
+                        }
+                        else {
+                            $.each(result, function (index, a) {
+
+                                var Data = "<div class='col-12 col-md-5 col-xl-3 border border-light m-1'> <h3 class='text-light'>" +
+                                    a.pasta_name + "</h3><hr style=' border: solid gray; border-radius: 2px;'><p>" +
+                                    "<img src='" + a.pasta_img + "' class='img-fluid' multiple />" +
+                                    "</p><p class='text-light'>" +
+                                    "說明:" + a.pasta_detail +
+                                    "</p><p class='text-light'>Price:" + a.pasta_price + "</p><input type='button' name='AddToCart' value='Add to Cart' class='btn btn-outline-secondary' itemid='" + a.rowid + "' id='btnAddToCart' onclick='AddToCart(this)' /></div>"
+
+                                SetData.append(Data);
+                                console.log(a);
+                            });
+                        }
+                    }
+                })
+            })
+        })
+        //#endregion
+
+        //#region   加入購物車
+        function AddToCart(item) {
+            var itemId = $(item).attr("itemid");
+            var formData = new FormData();
+            formData.append("ItemId", itemId);
+            $.ajax({
+                async: true,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                data: formData,
+                url: "Menu",
+                success: function (data) {
+                    if (data.Success) {
+                        $("#cartItem").text("(" + data.Counter + ")");
+                        toastr.success("成功新增餐點到購物車", "Information");
+                    }
+                },
+                error: function () {
+                    toastr.success("發生未預期錯誤", "Error");
+                    alert("There is some problem.");
+                }
+            });
+        }
+        //#endregion
+
+
+
+    </script>
+
+}
+
+@section css{
+    <style>
+
+        #SearchToken table tr td div a {
+            cursor:pointer;
+        
+        }
+        .carousel-indicators .ctrlLine {
+            width: 0px;
+            height: 0px;
+            border-radius: 0px;
+        }
+
+        body {
+            background-color: rgb(41, 43, 44);
+        }
+
+        .pp {
+            top: -10%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            padding-top: 16%;
+        }
+
+        .carousel-item {
+            height: 80vh;
+            width: 100%;
+        }
+
+            .carousel-item img {
+                height: 100vh;
+                width: 100%;
+            }
+
+        .info {
+            height: 15vh;
+            width: 100%;
+        }
+
+        #area {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+            top: 0;
+            left: 0;
+        }
+    </style>
+}
+<div class="carousel slide " data-ride="carousel" id="Picshow" data-interval="8000">
+    <ul class="carousel-indicators ">
+        <li data-target="#Picshow" data-slide-to="0" class="active ctrlLine">
+    </ul>
+    <div class="carousel-inner">
+
+        <div class="carousel-item active ">
+            <img src="~/bg/b_1.jpg" alt="" class="d-flex ">
+            <div id="area">
+                <div class="carousel-caption pp">
+                    <h3 class=" m-5">Menu</h3>
+                    <p>子裡展容青立結車個一深檢化，次何主，到的建久一圖。過不不放實以知這使。英一經不大而了很要花應班國大字成全傳日生落的評在題高，象道示？已印我每民大書的意，再拿都道才了問月量二說，不步民音據辦過飯感球語子舞費經回做飯能也十在，流形德氣護經高國舞。</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<hr>
+<div class="container">
+
+    <div class="row">
+        <div class="col-xl-2 col-md-3 col-12  ">
+            <div class="offset-1  m-5" id="SearchToken">
+                <table class="table table-bordered text-center">
+                    <tr>
+                        <th class="p-0 m-0 bg-dark">
+                            <div class="col-12 h5 text-light p-0 "><span class="text-info">餐點列表</span></div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="col-12 h5 text-light"><a>ALL<span class="d-none">all</span></a></div>
+                        </td>
+                    </tr>
+                    @foreach (var cate in ViewBag.cate)
+                    {
+                        <tr>
+                            <td>
+                                <div class="col-12 h5 text-light"><a>@cate.category_name<span class="d-none">@cate.category_id</span></a></div>
+                            </td>
+                        </tr>
+                    }
+                </table>
+
+
+            </div>
+
+        </div>
+        <div class=" row col-xl-10 col-md-9 col-12 " id="DataSearching">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-12 col-md-5 col-xl-3 border border-light m-1">
+                    <h3 class="text-light">
+                        @Html.DisplayFor(modelItem => item.pasta_name)
+                    </h3>
+                    <hr style=" border: solid gray; border-radius: 2px;">
+                    <p>
+                        <img src="@Html.DisplayFor(modelItem => item.pasta_img)" class="img-fluid" multiple />
+                    </p>
+                    <p class="text-light">
+                        說明:@Html.DisplayFor(modelItem => item.pasta_detail)
+                    </p>
+                    <p class="text-light">
+                        Price:@Html.DisplayFor(modelItem => item.pasta_price)
+                    </p>
+                    <input type="button" name="AddToCart" value="Add to Cart" class="btn btn-outline-secondary" itemid="@item.rowid" id="btnAddToCart" onclick="AddToCart(this)" />
+                </div>
+
+            }
+
+        </div>
+    </div>
+
+</div>

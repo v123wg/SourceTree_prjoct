@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PastaOrderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="category_id" />
+    </Key>
+    <Property Name="category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="category_name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="order_id" />
+    </Key>
+    <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="order_name" Type="nvarchar" MaxLength="50" />
+    <Property Name="order_phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="order_location" Type="nvarchar" MaxLength="250" />
+    <Property Name="order_email" Type="nvarchar" MaxLength="250" />
+    <Property Name="order_date" Type="datetime" />
+    <Property Name="order_status" Type="nvarchar" MaxLength="50" />
+    <Property Name="order_fn" Type="nvarchar" MaxLength="50" />
+    <Property Name="order_payFn" Type="nvarchar" MaxLength="50" />
+    <Property Name="order_total" Type="int" />
+    <Property Name="isLogin" Type="int" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="orderDetalid" />
+    </Key>
+    <Property Name="orderDetalid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="orderid" Type="int" />
+    <Property Name="itemId" Type="int" />
+    <Property Name="quantity" Type="int" />
+  </EntityType>
+  <EntityType Name="Pastas">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="pasta_name" Type="nvarchar" MaxLength="50" />
+    <Property Name="category_id" Type="int" />
+    <Property Name="pasta_quantity" Type="int" />
+    <Property Name="pasta_detail" Type="nvarchar(max)" />
+    <Property Name="pasta_price" Type="int" />
+    <Property Name="pasta_img" Type="nvarchar" MaxLength="50" />
+    <Property Name="pasta_sort" Type="int" />
+    <Property Name="pasta_Top" Type="int" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="mno" Type="nvarchar" MaxLength="50" />
+    <Property Name="mname" Type="nvarchar" MaxLength="50" />
+    <Property Name="remark" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="mno" Type="nvarchar" MaxLength="50" />
+    <Property Name="mname" Type="nvarchar" MaxLength="50" />
+    <Property Name="password" Type="nvarchar" MaxLength="50" />
+    <Property Name="email" Type="nvarchar" MaxLength="250" />
+    <Property Name="role_no" Type="nvarchar" MaxLength="50" />
+    <Property Name="birthday" Type="datetime" />
+    <Property Name="remark" Type="nvarchar" MaxLength="250" />
+    <Property Name="varify_code" Type="nvarchar" MaxLength="50" />
+    <Property Name="isvarify" Type="int" />
+  </EntityType>
+  <Association Name="FK_OrderDetail_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="order_id" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="orderid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pastas_Categories">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+    <End Role="Pastas" Type="Self.Pastas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="Pastas">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PastaOrderModelStoreContainer">
+    <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pastas" EntityType="Self.Pastas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_OrderDetail_Order" Association="Self.FK_OrderDetail_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pastas_Categories" Association="Self.FK_Pastas_Categories">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Pastas" EntitySet="Pastas" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

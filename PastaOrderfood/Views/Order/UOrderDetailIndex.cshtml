@@ -1,0 +1,79 @@
+﻿@model IEnumerable<PastaOrderfood.Models.OrderDetail>
+
+@{
+    ViewBag.Title = "UOrderDetailIndex";
+}
+
+<h2 class="text-center text-light">餐點明細</h2>
+
+<div class="container">
+    <div class="row border border-dark border-bottom-0 bg-light ">
+        <div class=" col-12 col-sm-6 border border-dark border-right-0 border-left-0 border-top-0 mt-2 ">
+            <p class="mb-2">訂餐時間:@Model.FirstOrDefault().Order.order_date</p>
+        </div>
+        <div class=" col-12 col-sm-6 border border-dark border-right-0 border-left-0 border-top-0 mt-2">
+            <p class="mb-2">姓名:@Model.FirstOrDefault().Order.order_name</p>
+        </div>
+        <div class=" col-12 col-sm-6 border border-dark border-right-0 border-left-0 border-top-0 mt-2 ">
+            <p class="mb-2">Email:@Model.FirstOrDefault().Order.order_email</p>
+        </div>
+        <div class=" col-12 col-sm-6 border border-dark border-right-0 border-left-0 border-top-0 mt-2">
+            <p class="mb-2">電話:@Model.FirstOrDefault().Order.order_phone</p>
+        </div>
+        <div class=" col-12 col-sm-6 border border-dark border-right-0 border-left-0 border-top-0 mt-2 ">
+            <p class="mb-2">訂單狀態:@Model.FirstOrDefault().Order.order_status</p>
+        </div>
+        <div class=" col-12 col-sm-6 border border-dark border-right-0 border-left-0 border-top-0 mt-2">
+            <p class="mb-2">總金額:@Model.FirstOrDefault().Order.order_total</p>
+        </div>
+        <div class=" col-12 col-sm-6 border border-dark border-right-0 border-left-0 border-top-0 mt-2">
+            <p class="mb-2">付款方式:@Model.FirstOrDefault().Order.order_payFn</p>
+        </div>
+        <div class=" col-12 col-sm-6 border border-dark border-right-0 border-left-0 border-top-0 mt-2">
+            <p class="mb-2">方式:@Model.FirstOrDefault().Order.order_fn</p>
+        </div>
+
+        @if (Model.FirstOrDefault().Order.order_fn == "外送")
+        {
+            <div class=" col-12 col-sm-6 border border-dark border-right-0 border-left-0 border-top-0 mt-2">
+                <p class="mb-2">地址:@Model.FirstOrDefault().Order.order_location</p>
+            </div>
+            <div class=" col-12 col-sm-6 border border-dark border-right-0 border-left-0 border-top-0 mt-2">
+                <p class="mb-2">-</p>
+            </div>
+        }
+
+    </div>
+    <table class="table table-bordered mt-5 table-light">
+        <thead>
+            <tr>
+                <th>
+                    餐點名稱
+                </th>
+                <th>
+                    數量
+                </th>
+                <th>
+                    單價
+                </th>
+            </tr>
+        </thead>
+        <tbody id="DataSearching">
+            @foreach (var item in ViewBag.temp)
+            {
+                <tr>
+                    <td>
+                        @item.pasta_name
+                    </td>
+                    <td>
+                        @item.quantity
+                    </td>
+                    <td>
+                        @item.unitprice
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>@Html.ActionLink("返回", "UOrderIndex")</div>
+</div>

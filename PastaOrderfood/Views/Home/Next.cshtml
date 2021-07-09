@@ -1,0 +1,106 @@
+﻿@using PastaOrderfood.Account;
+@{
+    ViewBag.Title = "結帳";
+    var name = "";
+    var email = "";
+    var login = 0;
+
+}
+
+
+<h2  class="text-center">Next</h2>
+@if (UserAccount.UserNo != "")
+{
+    <h1 class="mt-5"></h1>
+    foreach (var item in Model)
+    {
+        name = @item.mname;
+        email = @item.email;
+
+    }
+    login = 1;
+}
+else
+{
+    <h1 class="mt-5"></h1>
+}
+<div class="container">
+    <div class="row ">
+        <div class="col-12 col-md-4 border border-info  bg-dark">
+
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class=" mt-5">
+                    @if (@login == 1)
+                    {
+                        <p class="text-light">姓名    <input class="text-box single-line text-muted " type="text" name="name" value="@name" readonly="readonly" /></p>
+                    }
+                    else
+                    {
+                        <p class="text-light">姓名    <input class="text-box single-line" type="text" name="name" value="" /></p>
+                    }
+                </div>
+                <div class=" mt-2">
+                    <p class="text-light">電話    <input class="text-box single-line" type="text" name="phone" value="" /></p>
+                </div>
+                <div class="mt-2">
+                    <select id="fn" name="fn">
+                        <option value="外帶">外帶</option>
+                        <option value="外送">外送</option>
+                    </select>
+                </div>
+                <div class=" mt-2">
+                    <p class="text-light">地址</p>
+                    <select id="location_1" name="location_1">
+                        <option value="台北市中正區">台北市中正區</option>
+                    </select>
+                    <input class="text-box" type="text" name="location_2" value="" />
+                </div>
+                <div class=" mt-2">
+                    @if (@login == 1)
+                    {
+                        <p class="text-light">Email <input class="text-box single-line text-muted " type="text" name="Email" value="@email" readonly="readonly" /></p>
+                    }
+                    else
+                    {
+                        <p class="text-light">Email <input class="text-box single-line" type="text" name="Email" value="" /></p>
+                    }
+                </div>
+                <div class="d-none">
+                    <input type="text" name="isLogin" value="@login" />
+                </div>
+                <div class=" mb-5">
+                    <input class="btn btn-secondary" type="submit" value="下單" />
+                </div>
+
+            }
+
+
+        </div>
+        <div class="col-12 col-md-8 border border-info bg-light">
+            <div class="row">
+                <div class="col-3">名稱</div>
+                <div class="col-3">圖片</div>
+                <div class="col-3">數量</div>
+                <div class="col-3">價格</div>
+            </div>
+            <hr />
+            <div class="row">
+                @foreach (var item in ViewBag.cartStore)
+                {
+                    <div class="col-3">@item.pasta_name</div>
+                    <div class="col-3"><img src="@item.pasta_img" width="25" height="25" multiple /></div>
+                    <div class="col-3">@item.quantity</div>
+                    <div class="col-3">@item.unitprice</div>
+                    <hr>
+                }
+            </div>
+            <hr>
+            <p class="float-right m-2">TOTAL:@Session["Total"] NT</p>
+        </div>
+
+    </div>
+
+</div>

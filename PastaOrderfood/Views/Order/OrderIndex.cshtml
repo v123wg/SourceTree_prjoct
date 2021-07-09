@@ -1,0 +1,130 @@
+﻿@model IPagedList<PastaOrderfood.Models.Order>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "OrderIndex";
+    Layout = "~/Views/Shared/_LayoutBackend.cshtml";
+}
+@section scripts{
+
+    <script>
+        //#region ajax訂單搜尋
+        $(document).ready(function () {
+            console.log("ready");
+            $("#Search").keyup(function () {
+                var SearchBy = $("#SearchBy").val();
+                var SearchValue = $("#Search").val();
+                var SetData = $("#DataSearching");
+                SetData.html("");
+                $.ajax({
+                    type: "post",
+                    url: "GetOrderSearchData?SearchBy=" + SearchBy + "&SearchValue=" + SearchValue,
+                    contentType: "html",
+                    success: function (result) {
+                        //刷新單區塊
+                        $("#tpg").load(location.href + " #tpg");
+                        $("#pgld").load(location.href + " #pgld");
+                    }
+                })
+            })
+        })
+        //#endregion
+
+        //#region 變更訂單
+        $("div.foo").click(function () {
+            $("span", this).addClass("bar");
+        });
+        //#endregion
+    </script>
+}
+<div class="container">
+    <h2 class="text-center">訂單管理</h2>
+    <br />
+
+    <div class="row m-0">
+        <label>搜尋</label>
+    </div>
+    <div class="row m-0">
+        <select id="SearchBy" class="form-control">
+            <option value="id">訂單ID</option>
+            <option value="name">姓名</option>
+            <option value="phone">電話</option>
+            <option value="email">Email</option>
+            <option value="isLogin">是否登入</option>
+        </select>
+        <div>
+            <input class="form-control" placeholder="請輸入欲搜尋項目" id="Search" />
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <table class="table table-bordered" id="tpg">
+        <thead>
+            <tr>
+                <th>
+                    訂單編號
+                </th>
+                <th>
+                    方式
+                </th>
+                <th>
+                    訂餐時間
+                </th>
+                <th>
+                    訂單狀態
+                </th>
+                <th>
+                    付款方式
+                </th>
+                <th>
+                    總價
+                </th>
+                <th>
+                    option
+                </th>
+            </tr>
+        </thead>
+        <tbody id="DataSearching">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.order_id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.order_fn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.order_date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.order_status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.order_payFn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.order_total)
+                    </td>
+                    <td>
+                        @Html.ActionLink("編輯", "OrderEdit", new { id = item.order_id }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("改變狀態", "OrderDetailIndex", new { id = item.order_id }, new { @class = "btn btn-info" ,@id = "",@onclick=""})
+                        @Html.ActionLink("刪除", "OrderDelete", new { id = item.order_id }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("明細", "OrderDetailIndex", new { id = item.order_id }, new { @class = "btn btn-light" })
+                    </td>
+                </tr>
+
+
+
+            }
+        </tbody>
+
+    </table>
+    <div class="align-content-center" id="pgld">@Html.PagedListPager(Model, page => Url.Action("OrderIndex", new { page }))</div>
+    <p class="text-center">
+        <button type="button" class="btn btn-outline-primary">@Html.ActionLink("Create New", "OrderCreate")</button>
+    </p>
+
+</div>

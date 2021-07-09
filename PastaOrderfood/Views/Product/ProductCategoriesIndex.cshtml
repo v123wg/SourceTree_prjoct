@@ -1,0 +1,41 @@
+﻿@model IEnumerable<PastaOrderfood.Models.Categories>
+
+@{
+    ViewBag.Title = "ProductCategoriesIndex";
+    Layout = "~/Views/Shared/_LayoutBackend.cshtml";
+}
+
+<h2 class="text-center">餐點總類</h2>
+
+
+<div class="container mt-5">
+    <div class="row mb-3">
+        <div class="col-8 text-left m-0 p-0">
+            @Html.ActionLink("+新增", "ProductCategoriesCreate", "Product", new { @class = "btn btn-primary  " })
+        </div>
+        <div class="col-4">
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-12 border border-dark text-center ">
+            <div class="row bg-dark">
+                <div class="col-4 text-light h5">總類ID(編號)</div>
+                <div class="col-4 text-light h5">總類名稱</div>
+                <div class="col-4 text-light h5">Option</div>
+            </div>
+            <div class="row text-center mb-2">
+                @foreach (var item in Model)
+                {
+                    <div class="col-4 mt-2">@item.category_id</div>
+                    <div class="col-4 mt-2">@item.category_name</div>
+                    <div class="col-4 mt-2 ">
+                        @Html.ActionLink("編輯", "ProductCategoriesEdit", new { category_id = item.category_id }, new { @class = "btn btn-info" })
+                        @*@Html.ActionLink("刪除", "ProductCategoriesDelete", new { category_id = item.category_id }, new { @class = "btn btn-danger" })*@
+                    </div>
+                    <hr />
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">@Html.ActionLink("返回列表", "ProductManageIndex")</div>
+</div>

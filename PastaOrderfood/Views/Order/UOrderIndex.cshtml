@@ -1,0 +1,74 @@
+﻿@model IEnumerable<PastaOrderfood.Models.Order>
+
+@{
+    ViewBag.Title = "UOrderIndex";
+}
+
+<h2 class="text-center text-light">過往訂單</h2>
+<div class="container bg-light p-0">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    訂單編號
+                </th>
+                <th>
+                    方式
+                </th>
+                <th>
+                    地址
+                </th>
+                <th>
+                    訂餐時間
+                </th>
+                <th>
+                    訂單狀態
+                </th>
+                <th>
+                    付款方式
+                </th>
+                <th>
+                    總價
+                </th>
+                <th>
+                    option
+                </th>
+            </tr>
+        </thead>
+        <tbody id="DataSearching">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.order_id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.order_fn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.order_location)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.order_date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.order_status)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.order_payFn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.order_total)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("餐點明細", "UOrderDetailIndex", new { id = item.order_id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+</div>

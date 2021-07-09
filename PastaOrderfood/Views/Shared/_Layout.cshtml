@@ -1,0 +1,122 @@
+﻿@using PastaOrderfood.Account;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/toastr.min.js"></script>
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/bootstrap.js")"></script>
+    <style>
+        body {
+            background-image: url('../../bg/bg_4.jpg');
+            margin: 0;
+            background-position: center;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $(".loading-wrapper").hide();
+            }, 1000);
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+    @RenderSection("css", required: false)
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/loading.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="p-0 m-0 ">
+
+
+
+
+    <div class="loading-wrapper">
+        <div style="color: #f68f6f" class="loading la-cog la-3x">
+            <div></div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
+        <a class="navbar-brand" href="/Home/Index"><i class="text-danger fa fa-coffee fa-lg" aria-hidden="true"></i>Pastas</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/Home/Index">
+                        Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Menu", "Menu", "Home", null, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @if (Session["CartCount"] == null)
+                    {
+                        @Html.ActionLink(" ", "Cart", "Home", new { @class = "nav-link  text-info fa fa-shopping-cart fa-lg mt-1", id = "cartItem" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("(" + Session["CartCount"] + ")", "Cart", "Home", new { @class = "nav-link text-info fa fa-shopping-cart fa-lg mt-1", id = "cartItem" })
+                    }
+                </li>
+                @if (UserAccount.IsLogin)
+                {
+                    <li class="nav-item dropdown ">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-lg text-info"></i> @UserAccount.UserName<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @if (UserAccount.RoleNo == AppEnum.enUserRole.Admin)
+                            {
+                                <li> @Html.ActionLink("後台", "Index", "Admin", null, new { @class = "dropdown-item" })</li>
+                            }
+                            <li> @Html.ActionLink("訂單查詢", "UOrderIndex", "Order", null, new { @class = "dropdown-item" })</li>
+                            <li> @Html.ActionLink("Login Out", "LogOut", "User", null, new { @class = "dropdown-item" })</li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        @Html.ActionLink("Login", "Login", "User", null, new { @class = "nav-link " })
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/Home/Index">PASTAS</a>
+    </nav>
+
+
+    @RenderBody()
+
+
+    @*<footer class="bg-dark  footer  footer-bar mt-2">
+            <div class="container">
+                <p class="m-0 text-center text-white">Pizza Copyright &copy; @DateTime.Now.Year</p>
+            </div>
+        </footer>*@
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PastaOrderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="PastaOrderEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="PastaOrderModel.Categories" />
+    <EntitySet Name="Order" EntityType="PastaOrderModel.Order" />
+    <EntitySet Name="OrderDetail" EntityType="PastaOrderModel.OrderDetail" />
+    <EntitySet Name="Pastas" EntityType="PastaOrderModel.Pastas" />
+    <EntitySet Name="Roles" EntityType="PastaOrderModel.Roles" />
+    <EntitySet Name="Users" EntityType="PastaOrderModel.Users" />
+    <AssociationSet Name="FK_Pastas_Categories" Association="PastaOrderModel.FK_Pastas_Categories">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Pastas" EntitySet="Pastas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetail_Order" Association="PastaOrderModel.FK_OrderDetail_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="category_id" />
+    </Key>
+    <Property Name="category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="category_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Pastas" Relationship="PastaOrderModel.FK_Pastas_Categories" FromRole="Categories" ToRole="Pastas" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="order_id" />
+    </Key>
+    <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="order_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="order_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="order_location" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="order_email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="order_date" Type="DateTime" Precision="3" />
+    <Property Name="order_status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="order_fn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="order_payFn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="order_total" Type="Int32" />
+    <Property Name="isLogin" Type="Int32" />
+    <NavigationProperty Name="OrderDetail" Relationship="PastaOrderModel.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="orderDetalid" />
+    </Key>
+    <Property Name="orderDetalid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="orderid" Type="Int32" />
+    <Property Name="itemId" Type="Int32" />
+    <Property Name="quantity" Type="Int32" />
+    <NavigationProperty Name="Order" Relationship="PastaOrderModel.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Pastas">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="pasta_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="category_id" Type="Int32" />
+    <Property Name="pasta_quantity" Type="Int32" />
+    <Property Name="pasta_detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="pasta_price" Type="Int32" />
+    <Property Name="pasta_img" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="pasta_sort" Type="Int32" />
+    <Property Name="pasta_Top" Type="Int32" />
+    <NavigationProperty Name="Categories" Relationship="PastaOrderModel.FK_Pastas_Categories" FromRole="Pastas" ToRole="Categories" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="mno" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="mname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="remark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="mno" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="mname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="role_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="birthday" Type="DateTime" Precision="3" />
+    <Property Name="remark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="varify_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="isvarify" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_Pastas_Categories">
+    <End Type="PastaOrderModel.Categories" Role="Categories" Multiplicity="0..1" />
+    <End Type="PastaOrderModel.Pastas" Role="Pastas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="Pastas">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetail_Order">
+    <End Type="PastaOrderModel.Order" Role="Order" Multiplicity="0..1" />
+    <End Type="PastaOrderModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="order_id" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="orderid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

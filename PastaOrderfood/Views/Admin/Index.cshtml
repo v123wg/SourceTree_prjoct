@@ -1,0 +1,34 @@
+﻿@using PastaOrderfood.Models;
+
+@{
+    ViewBag.Title = "首頁";
+    Layout = "~/Views/Shared/_LayoutBackend.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 mr-sm-5 col-sm-3 mt-3 border border-info">
+            <div class="">
+                <i class="text-danger fa fa-shopping-cart fa-lg "></i>
+            </div>
+            <hr />
+            <p> 有 @ViewBag.status 份訂單未接單</p>
+        </div>
+        <div class="col-12 col-sm-3 mr-sm-5 mt-3 border border-danger">
+            <div class="">
+                <i class="text-danger fa fa-book fa-lg "></i>
+            </div>
+            <hr />
+            <p> </p>
+        </div>
+        <div class="col-12 col-sm-3 mr-sm-5 mt-3 border border-info">
+            <div class="">
+                <i class="text-danger fa fa-cutlery  fa-lg "></i>
+            </div>
+
+            <hr />
+            <p> 有 @ViewBag.food 項食物</p>
+        </div>
+    </div>
+</div>

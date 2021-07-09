@@ -1,0 +1,109 @@
+﻿@model IPagedList<PastaOrderfood.Models.Pastas>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "ProductManageIndex";
+    Layout = "~/Views/Shared/_LayoutBackend.cshtml";
+}
+@section scripts{
+
+    <script>
+        //#region ajax菜單搜尋
+        $(document).ready(function () {
+            console.log("ready");
+            $("#Search").keyup(function () {
+                var SearchBy = $("#SearchBy").val();
+                var SearchValue = $("#Search").val();
+                var SetData = $("#DataSearching");
+                SetData.html("");
+                $.ajax({
+                    type: "post",
+                    url: "GetProductSearchData?SearchBy=" + SearchBy + "&SearchValue=" + SearchValue,
+                    contentType: "html",
+                    success: function (result) {
+                        $("#tpg").load(location.href + " #tpg");
+                        $("#pgld").load(location.href + " #pgld");
+                    }
+                })
+            })
+        })
+        //#endregion
+    </script>
+}
+<div class="container">
+    <h2 class="text-center">菜單管理</h2>
+    <br />
+
+    <div class="row m-0">
+        <label>搜尋</label>
+    </div>
+    <div class="row m-0">
+        <select id="SearchBy" class="form-control">
+            <option value="name">名稱</option>
+            <option value="category_id">種類id</option>
+        </select>
+
+        <div>
+            <input class="form-control" placeholder="請輸入欲搜尋項目" id="Search" />
+        </div>
+    </div>
+
+
+    <br />
+    <div>
+        @Html.ActionLink("+總類", "ProductCategoriesIndex", "Product", null, new { @class = "btn btn-primary " })
+    </div>
+    <br />
+    <div id="tpg">
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().pasta_name)
+                    </th>
+                    <th>
+                        種類
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().pasta_price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().pasta_quantity)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().pasta_img)
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody id="DataSearching">
+                @foreach (var Item in Model)
+                {
+                    <tr>
+                        <td>@Item.pasta_name</td>
+                        <td>@Item.Categories.category_name</td>
+                        <td>@Item.pasta_price</td>
+                        <td>@Item.pasta_quantity</td>
+                        <td><img src="@Item.pasta_img" width="50" height="50" multiple /></td>
+
+                        <td>
+                            @Html.ActionLink("編輯", "ProductManageEdit", new
+                            {
+                                rowid = Item.rowid
+                                }, new { @class = "btn btn-info" })
+                            @Html.ActionLink("刪除", "ProductManageDelete", new { rowid = Item.rowid }, new { @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+    <div class="align-content-center" id="pgld">@Html.PagedListPager(Model, page => Url.Action("ProductManageIndex", new { page }))</div>
+    <p class="text-center">
+        <button type="button" class="btn btn-outline-primary">@Html.ActionLink("Create New", "ProductManageCreate")</button>
+    </p>
+
+</div>
+
