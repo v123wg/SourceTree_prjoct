@@ -33,6 +33,6 @@ namespace PastaOrderfood.Models
         public Nullable<int> isLogin { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public ICollection<OrderDetail> OrderDetail { get; set; }
+        public  ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }

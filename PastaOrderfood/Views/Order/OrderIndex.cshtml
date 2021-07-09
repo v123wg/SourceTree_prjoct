@@ -9,9 +9,9 @@
 @section scripts{
 
     <script>
-        //#region ajax訂單搜尋
         $(document).ready(function () {
             console.log("ready");
+            //#region ajax訂單搜尋
             $("#Search").keyup(function () {
                 var SearchBy = $("#SearchBy").val();
                 var SearchValue = $("#Search").val();
@@ -24,20 +24,35 @@
                     success: function (result) {
                         //刷新單區塊
                         $("#tpg").load(location.href + " #tpg");
-                        $("#pgld").load(location.href + " #pgld");
+                        $("#pgld").load(location.href + " #pgld", function () {
+                            //重新綁定click
+                            $(".giveId").on("click", function () {
+                                console.log("giveId");
+                                $(".needId").attr("value", $(this).attr("id"));
+                            });
+
+                        });
+
                     }
                 })
             })
-        })
-        //#endregion
+            //#endregion
 
-        //#region 變更訂單
-        $("div.foo").click(function () {
-            $("span", this).addClass("bar");
-        });
-        //#endregion
+
+        })
+        $(document).ready(function () {
+            //綁定 click
+            $(".giveId").on("click", function () {
+                console.log("giveId");
+                $(".needId").attr("value", $(this).attr("id"));
+            });
+        })
+
+
     </script>
 }
+
+
 <div class="container">
     <h2 class="text-center">訂單管理</h2>
     <br />
@@ -110,7 +125,38 @@
                     </td>
                     <td>
                         @Html.ActionLink("編輯", "OrderEdit", new { id = item.order_id }, new { @class = "btn btn-info" })
-                        @Html.ActionLink("改變狀態", "OrderDetailIndex", new { id = item.order_id }, new { @class = "btn btn-info" ,@id = "",@onclick=""})
+
+                        <!-- #region popup 改變狀態 -->
+                        <a href="#" class="btn btn-primary giveId" id="@item.order_id" value="A" data-toggle="modal" data-target="#popup">狀態</a>
+                        <div class="modal fade" id="popup">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">變更狀態</div>
+                                    @using (Html.BeginForm("OrderStatusEdit", "Order", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                訂單編號:<input class="needId" type="text" name="id" value="" readonly="readonly" style="border-style:none">
+                                            </div>
+                                            <span>
+                                                狀態:
+                                            </span>
+                                            @Html.DropDownList("status", (IEnumerable<SelectListItem>)ViewBag.SelectList)
+  
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="form-group">
+                                                <div class="col-md-offset-2 col-md-10">
+                                                    <input type="submit" value="更改" class="btn btn-primary" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <!-- #endregion -->
+
                         @Html.ActionLink("刪除", "OrderDelete", new { id = item.order_id }, new { @class = "btn btn-danger" })
                         @Html.ActionLink("明細", "OrderDetailIndex", new { id = item.order_id }, new { @class = "btn btn-light" })
                     </td>

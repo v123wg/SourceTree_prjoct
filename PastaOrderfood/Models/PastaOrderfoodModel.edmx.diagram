@@ -13,6 +13,7 @@
         <EntityTypeShape EntityType="PastaOrderModel.Users" Width="1.5" PointX="5.75" PointY="3.75" />
         <AssociationConnector Association="PastaOrderModel.FK_Pastas_Categories" />
         <AssociationConnector Association="PastaOrderModel.FK_OrderDetail_Order" />
+        <EntityTypeShape EntityType="PastaOrderModel.OrderStatus" Width="1.5" PointX="5.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

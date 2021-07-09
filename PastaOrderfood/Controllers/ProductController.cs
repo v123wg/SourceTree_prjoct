@@ -133,7 +133,6 @@ namespace PastaOrderfood.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [LoginAuthorize(RoleNo = "Admin")]
         public JsonResult GetProductSearchData(string SearchBy, string SearchValue)
         {

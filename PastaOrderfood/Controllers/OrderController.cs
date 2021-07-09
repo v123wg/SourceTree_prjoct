@@ -14,14 +14,33 @@ namespace PastaOrderfood.Controllers
     {
         PastaOrderEntities db = new PastaOrderEntities();
         int pageSize = 5;
+
         // GET: Order
         [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult OrderIndex(int page = 1)
         {
+            # region 接單下拉式表單
 
+            var osfn = db.OrderStatus.OrderBy(m => m.status_id).ToList();
+            var selectList = new List<SelectListItem>();
+            foreach (var item in osfn)
+            {
+                //將資料庫資料加入選擇
+                selectList.Add(new SelectListItem
+                {
+                    Text= item.fn,
+                    Value=item.fn
+                });
+            }
+
+            ViewBag.SelectList = selectList;
+            #endregion
+
+            //初始List
             int currentPage = page < 1 ? 1 : page;
             var order = db.Order.Include("OrderDetail").OrderBy(m => m.order_id).ToList();
             var result = order.ToPagedList(currentPage, pageSize);
+            //查詢對應List
             switch (PageList.SearchOrderBy)
             {
 
@@ -51,11 +70,13 @@ namespace PastaOrderfood.Controllers
 
 
         }
+
         [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult OrderCreate()
         {
             return View();
         }
+
         [HttpPost]
         [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult OrderCreate(Order o)
@@ -66,6 +87,7 @@ namespace PastaOrderfood.Controllers
 
             return RedirectToAction("OrderIndex");
         }
+
         [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult OrderDelete(int id)
         {
@@ -74,12 +96,14 @@ namespace PastaOrderfood.Controllers
             db.SaveChanges();
             return RedirectToAction("OrderIndex");
         }
+
         [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult OrderEdit(int id)
         {
             var order = db.Order.Where(m => m.order_id == id).FirstOrDefault();
             return View(order);
         }
+
         [HttpPost]
         [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult OrderEdit(Order o)
@@ -115,21 +139,34 @@ namespace PastaOrderfood.Controllers
             ViewBag.temp = C;
             return View(UOrderDetail);
         }
+
+        //變更狀態
+        [LoginAuthorize(RoleNo = "Admin")]
+        public ActionResult OrderStatusEdit(int id, string status)
+        {
+            var order = db.Order.Where(m => m.order_id == id).FirstOrDefault();
+            order.order_status = status;
+            db.SaveChanges();
+            return RedirectToAction("OrderIndex");
+        }
+
+
+
         [LoginAuthorize(RoleNo = "Admin,Member")]
         public ActionResult UOrderIndex(int page = 1)
         {
-            string UN= UserAccount.UserName;
+            string UN = UserAccount.UserName;
             int currentPage = page < 1 ? 1 : page;
             var UOrder = db.Order.Include("OrderDetail").Where(m => m.order_name == UN && m.isLogin == 1).ToList();
             var result = UOrder.ToPagedList(currentPage, pageSize);
             return View(result);
         }
         [LoginAuthorize(RoleNo = "Admin,Member")]
-        public ActionResult UOrderDetailIndex(int id )
+        public ActionResult UOrderDetailIndex(int id)
         {
             int count = 0;
             ViewBag.temp = "";
-            List <Cart>  C = new List<Cart>();
+            List<Cart> C = new List<Cart>();
             string UN = UserAccount.UserName;
             var UOrderDetail = db.OrderDetail.Include("Order").Where(m => m.orderid == id).ToList();
             foreach (var item in UOrderDetail)
@@ -139,9 +176,9 @@ namespace PastaOrderfood.Controllers
                 {
                     pasta_name = i[count].pasta_name,
                     quantity = (int)item.quantity,
-                    unitprice =(int)i[count].pasta_price,
+                    unitprice = (int)i[count].pasta_price,
                     total = (int)item.Order.order_total
-                }) ;
+                });
             }
 
             ViewBag.temp = C;
@@ -150,7 +187,8 @@ namespace PastaOrderfood.Controllers
 
 
 
-        public JsonResult GetOrderSearchData(string SearchBy, string SearchValue) {
+        public JsonResult GetOrderSearchData(string SearchBy, string SearchValue)
+        {
             PageList.SearchOrderBy = SearchBy;
             PageList.SearchOrder = SearchValue;
             return Json("");

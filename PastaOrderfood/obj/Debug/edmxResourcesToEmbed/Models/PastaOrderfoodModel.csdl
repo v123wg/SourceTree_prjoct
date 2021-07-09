@@ -15,6 +15,7 @@
       <End Role="Order" EntitySet="Order" />
       <End Role="OrderDetail" EntitySet="OrderDetail" />
     </AssociationSet>
+    <EntitySet Name="OrderStatus" EntityType="PastaOrderModel.OrderStatus" />
   </EntityContainer>
   <EntityType Name="Categories">
     <Key>
@@ -114,4 +115,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="OrderStatus">
+    <Key>
+      <PropertyRef Name="status_id" />
+    </Key>
+    <Property Name="status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

@@ -31,5 +31,6 @@ namespace PastaOrderfood.Models
         public virtual DbSet<Pastas> Pastas { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<OrderStatus> OrderStatus { get; set; }
     }
 }

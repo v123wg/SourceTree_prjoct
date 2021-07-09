@@ -165,6 +165,9 @@
     <Compile Include="Models\OrderDetail.cs">
       <DependentUpon>PastaOrderfoodModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderStatus.cs">
+      <DependentUpon>PastaOrderfoodModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PastaOrderfoodModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
