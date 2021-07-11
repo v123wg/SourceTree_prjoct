@@ -124,16 +124,17 @@
                         @Html.DisplayFor(modelItem => item.order_total)
                     </td>
                     <td>
-                        @Html.ActionLink("編輯", "OrderEdit", new { id = item.order_id }, new { @class = "btn btn-info" })
+                        @*@Html.ActionLink("編輯", "OrderEdit", new { id = item.order_id }, new { @class = "btn btn-info" })*@
 
                         <!-- #region popup 改變狀態 -->
-                        <a href="#" class="btn btn-primary giveId" id="@item.order_id" value="A" data-toggle="modal" data-target="#popup">狀態</a>
+                        <a href="#" class="btn btn-primary giveId" id="@item.order_id"  data-toggle="modal" data-target="#popup">狀態</a>
                         <div class="modal fade" id="popup">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">變更狀態</div>
                                     @using (Html.BeginForm("OrderStatusEdit", "Order", FormMethod.Post, new { enctype = "multipart/form-data" }))
                                     {
+                                        @Html.AntiForgeryToken()
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 訂單編號:<input class="needId" type="text" name="id" value="" readonly="readonly" style="border-style:none">
@@ -142,7 +143,7 @@
                                                 狀態:
                                             </span>
                                             @Html.DropDownList("status", (IEnumerable<SelectListItem>)ViewBag.SelectList)
-  
+
                                         </div>
                                         <div class="modal-footer">
                                             <div class="form-group">
@@ -169,8 +170,6 @@
 
     </table>
     <div class="align-content-center" id="pgld">@Html.PagedListPager(Model, page => Url.Action("OrderIndex", new { page }))</div>
-    <p class="text-center">
-        <button type="button" class="btn btn-outline-primary">@Html.ActionLink("Create New", "OrderCreate")</button>
-    </p>
+
 
 </div>

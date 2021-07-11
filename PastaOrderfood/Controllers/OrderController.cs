@@ -28,8 +28,8 @@ namespace PastaOrderfood.Controllers
                 //將資料庫資料加入選擇
                 selectList.Add(new SelectListItem
                 {
-                    Text= item.fn,
-                    Value=item.fn
+                    Text = item.fn,
+                    Value = item.fn
                 });
             }
 
@@ -77,8 +77,7 @@ namespace PastaOrderfood.Controllers
             return View();
         }
 
-        [HttpPost]
-        [LoginAuthorize(RoleNo = "Admin")]
+
         public ActionResult OrderCreate(Order o)
         {
             if (!ModelState.IsValid) return View(o);
@@ -189,10 +188,35 @@ namespace PastaOrderfood.Controllers
 
         public JsonResult GetOrderSearchData(string SearchBy, string SearchValue)
         {
+            //將屬性設定成欲查詢對象
             PageList.SearchOrderBy = SearchBy;
             PageList.SearchOrder = SearchValue;
             return Json("");
         }
+
+
+
+
+
+        #region 丟棄的Action
+        /*
+                
+                *後台不應該能Create
+                [HttpPost]
+                [LoginAuthorize(RoleNo = "Admin")]
+                public ActionResult OrderCreate(Order o)
+                {
+                    if (!ModelState.IsValid) return View(o);
+                    db.Order.Add(o);
+                    db.SaveChanges();
+                    return RedirectToAction("OrderIndex");
+                }
+
+
+
+        */
+        #endregion
+
 
     }
 }

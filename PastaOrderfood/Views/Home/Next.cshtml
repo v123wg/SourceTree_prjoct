@@ -7,8 +7,32 @@
 
 }
 
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            
+            //初始化
+            $('#local').hide();
+            $('#location_2').removeAttr('required');
+        //#region   選擇後顯示/隱藏
+            $("#fn").change(function () {
+                if ($('#fn').val().toString() == '外帶') {
+                    $('#local').hide();
+                    $('#location_2').removeAttr('required');
+                }
+                if ($('#fn').val().toString() == '外送') {
+                    $('#local').show();
+                    $("#location_2").attr('required');
+                }
+            })
+        //#endregion
+        });
 
-<h2  class="text-center">Next</h2>
+
+    </script>
+
+}
+<h2 class="text-center">Next</h2>
 @if (UserAccount.UserNo != "")
 {
     <h1 class="mt-5"></h1>
@@ -35,37 +59,41 @@ else
                 <div class=" mt-5">
                     @if (@login == 1)
                     {
-                        <p class="text-light">姓名    <input class="text-box single-line text-muted " type="text" name="name" value="@name" readonly="readonly" /></p>
+                        <p class="text-light">姓名    <input class="text-box single-line text-muted " type="text" name="name" value="@name" readonly="readonly" required /></p>
                     }
                     else
                     {
-                        <p class="text-light">姓名    <input class="text-box single-line" type="text" name="name" value="" /></p>
+                        <p class="text-light">姓名    <input class="text-box single-line" type="text" name="name" value="" required /></p>
                     }
                 </div>
                 <div class=" mt-2">
-                    <p class="text-light">電話    <input class="text-box single-line" type="text" name="phone" value="" /></p>
+                    <p class="text-light">電話    <input class="text-box single-line" type="text" name="phone" value="" oninput="value=value.replace(/[^\d]/g,'')" required /></p>
                 </div>
                 <div class="mt-2">
-                    <select id="fn" name="fn">
+                    <select id="payFn" name="payFn" required>
+                        <option value="現金">現金</option>
+                        <option value="信用卡">信用卡</option>
+                    </select>
+                    <select id="fn" name="fn" required>
                         <option value="外帶">外帶</option>
                         <option value="外送">外送</option>
                     </select>
                 </div>
-                <div class=" mt-2">
+                <div class=" mt-2 " id="local">
                     <p class="text-light">地址</p>
                     <select id="location_1" name="location_1">
                         <option value="台北市中正區">台北市中正區</option>
                     </select>
-                    <input class="text-box" type="text" name="location_2" value="" />
+                    <input id="location_2" class="text-box" type="text" name="location_2" value="" required />
                 </div>
                 <div class=" mt-2">
                     @if (@login == 1)
                     {
-                        <p class="text-light">Email <input class="text-box single-line text-muted " type="text" name="Email" value="@email" readonly="readonly" /></p>
+                        <p class="text-light">Email <input class="text-box single-line text-muted " type="email" name="Email" value="@email" readonly="readonly" required /></p>
                     }
                     else
                     {
-                        <p class="text-light">Email <input class="text-box single-line" type="text" name="Email" value="" /></p>
+                        <p class="text-light">Email <input class="text-box single-line" type="email" name="Email" value="" required /></p>
                     }
                 </div>
                 <div class="d-none">
