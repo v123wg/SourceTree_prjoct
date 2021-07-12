@@ -204,6 +204,7 @@
   <ItemGroup>
     <Content Include="bg\bg_2.jpg" />
     <Content Include="bg\bg_4.jpg" />
+    <Content Include="bg\bkicon.png" />
     <Content Include="bg\b_1.jpg" />
     <Content Include="bg\b_2.jpg" />
     <Content Include="bg\g1.jpg" />
@@ -408,6 +409,7 @@
     <Content Include="Views\Order\OrderDetailIndex.cshtml" />
     <Content Include="Views\Order\OrderEdit.cshtml" />
     <Content Include="Views\Home\thankOrder.cshtml" />
+    <Content Include="Views\Shared\_PartialFooter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

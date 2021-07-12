@@ -93,8 +93,10 @@
     <style>
 
         #SearchToken table tr td div a {
-            cursor:pointer;
-        
+            cursor: pointer;
+        }
+        #SearchToken table tr td div a:hover{
+            color:orange;
         }
         .carousel-indicators .ctrlLine {
             width: 0px;
@@ -218,3 +220,8 @@
     </div>
 
 </div>
+
+
+@{
+    Html.RenderPartial("_PartialFooter");
+}
