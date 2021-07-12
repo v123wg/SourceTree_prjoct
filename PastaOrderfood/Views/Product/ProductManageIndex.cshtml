@@ -34,24 +34,6 @@
 
 
 
-
-<p>
-    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#popup">content</a>
-</p>
-
-
-<div class="modal fade" id="popup" >
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">編輯</div>
-            <div class="modal-body"></div>
-            <div class="modal-footer"></div>
-        </div>
-    </div>
-</div>
-
-
-
 <div class="container">
     <h2 class="text-center">菜單管理</h2>
     <br />
@@ -73,7 +55,8 @@
 
     <br />
     <div>
-        @Html.ActionLink("+總類", "ProductCategoriesIndex", "Product", null, new { @class = "btn btn-primary " })
+        @Html.ActionLink("+種類", "ProductCategoriesIndex", "Product", null, new { @class = "btn btn-primary " })
+        @Html.ActionLink("新增餐點", "ProductManageCreate", "Product", null, new { @class = "btn btn-primary " })
     </div>
     <br />
     <div id="tpg">
@@ -122,9 +105,7 @@
         </table>
     </div>
     <div class="align-content-center" id="pgld">@Html.PagedListPager(Model, page => Url.Action("ProductManageIndex", new { page }))</div>
-    <p class="text-center">
-        <button type="button" class="btn btn-outline-primary">@Html.ActionLink("Create New", "ProductManageCreate")</button>
-    </p>
+
 
 </div>
 

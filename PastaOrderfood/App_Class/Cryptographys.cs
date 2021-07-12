@@ -10,18 +10,18 @@ using Microsoft.Win32.SafeHandles;
 
 namespace PastaOrderfood.Account //DevStudio.Securitys
 {
-    /// <summary>
-    /// AES 演算法為字串加密解密
-    /// </summary>
+
+    // AES 演算法為字串加密解密
+
     public class Cryptographys : IDisposable
     {
         #region 解構子
         private bool disposed = false;
         private SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
 
-        /// <summary>
-        /// 解構子,實現IDisposable中的Dispose方法
-        /// </summary>
+
+        // 解構子,實現IDisposable中的Dispose方法
+
         public void Dispose()
         {
             //必須為true
@@ -29,10 +29,8 @@ namespace PastaOrderfood.Account //DevStudio.Securitys
             //通知垃圾回收機制不再調用終端子（析構器）
             GC.SuppressFinalize(this);
         }
-        /// <summary>
-        /// 解構子
-        /// </summary>
-        /// <param name="disposing">disposing</param>
+
+        // 解構子
         protected virtual void Dispose(bool disposing)
         {
             if (disposed) return;
@@ -44,9 +42,9 @@ namespace PastaOrderfood.Account //DevStudio.Securitys
             //讓類別知道自己已經被釋放
             disposed = true;
         }
-        /// <summary>
-        /// ezApplication 解構子
-        /// </summary>
+
+        // ezApplication 解構子
+
         ~Cryptographys()
         {
             //必須為false
@@ -60,20 +58,19 @@ namespace PastaOrderfood.Account //DevStudio.Securitys
         }
         #endregion
         #region 屬性
-        /// <summary>
-        /// 錯誤訊息
-        /// </summary>
+
+        // 錯誤訊息
+
         public string ErrorMessage { get; set; }
         #endregion
         #region 函數
-        /// <summary>
-        /// MD5 加密法(不可逆)
-        /// </summary>
-        /// <param name="source">加密文字字串</param>
-        /// <returns>
-        /// 值:abcdefg
-        /// 加密:esZsDxSN6VGbi9JkMSxNZA==
-        /// </returns>
+        // MD5 加密法(不可逆)
+
+        // 加密文字字串
+        // <returns>
+        // 值:abcdefg
+        // 加密:esZsDxSN6VGbi9JkMSxNZA==
+        // </returns>
         public string MD5Encode(string source)
         {
             ErrorMessage = "";
@@ -95,14 +92,12 @@ namespace PastaOrderfood.Account //DevStudio.Securitys
             }
             return str_string;
         }
-        /// <summary>
-        /// SHA256 加密法(不可逆)
-        /// </summary>
-        /// <param name="source">加密文字字串</param>
-        /// <returns>
-        /// 值:abcdefg
-        /// 加密:fRpUEnsiJQL1t5tfsIAwYRUqRPkrN+I8ZSe69mXU2po=
-        /// </returns>
+        // SHA256 加密法(不可逆)
+        //加密文字字串
+        // <returns>
+        // 值:abcdefg
+        // 加密:fRpUEnsiJQL1t5tfsIAwYRUqRPkrN+I8ZSe69mXU2po=
+        // </returns>
         public string SHA256Encode(string source)
         {
             ErrorMessage = "";

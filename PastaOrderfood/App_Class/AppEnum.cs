@@ -3,31 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-/// <summary>
-/// 枚舉類型類別
-/// </summary>
+
+// 枚舉類型類別
+
 public static class AppEnum
 {
-    /// <summary>
-    /// 使用者角色枚舉類型
-    /// </summary>
+
+    // 使用者角色枚舉類型
+
     public enum enUserRole
     {
-        /// <summary>
-        /// 會員角色
-        /// </summary>
+
+        // 會員角色
         Member = 0,
-        /// <summary>
-        /// 管理者角色
-        /// </summary>
+        // 管理者角色
         Admin = 1,
-        /// <summary>
-        /// 廠商角色
-        /// </summary>
-        Vendor = 2,
-        /// <summary>
-        /// 訪客
-        /// </summary>
+        // 員工 (尚未使用)
+        Employee = 2,
+        // 訪客
         Guest = 3
     }
 }

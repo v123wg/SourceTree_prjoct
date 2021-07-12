@@ -4,16 +4,7 @@
     ViewBag.Title = "ProductManageEdit";
     Layout = "~/Views/Shared/_LayoutBackend.cshtml";
 }
-@section css{
 
-    <style>
-        .centerblock {
-            width: 275px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-    </style>
-}
 <div class="container">
     <h2 class="text-center">餐點編輯</h2>
     <div class="text-center">
@@ -35,10 +26,9 @@
             </div>
 
             <div class="form-group ">
-                @Html.LabelFor(model => model.category_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                <p>種類</p>
                 <div class="col-md-10 centerblock">
-                    @Html.EditorFor(model => model.category_id, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
+                    @Html.DropDownList("categories_id", (IEnumerable<SelectListItem>)ViewBag.SelectList)
                 </div>
             </div>
 
@@ -68,19 +58,17 @@
             <div class="form-group ">
                 @Html.LabelFor(model => model.pasta_img, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10 centerblock">
-                    @Html.TextBoxFor(m => m.pasta_img, new { type = "file", name = "ImageFile"})
-                    @Html.ValidationMessageFor(model => model.pasta_detail, "", new { @class = "text-danger" })
-                    @*<input type="file" name="ImageFile" value="" required>*@
+                    <input type="file" name="ImageFile" required>
                 </div>
+                @*<input type="file" name="ImageFile" value="" required>*@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10 centerblock ">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="儲存" class="btn btn-primary" />
+                    @Html.ActionLink("取消", "ProductManageIndex", "Product", new { @class="btn btn-danger"})
                 </div>
             </div>
-            <div class="col-md-offset-2 col-md-10 centerblock ">
-                @Html.ActionLink("Back to List", "ProductManageIndex")
-            </div>
+
         </div>
         }
     </div>

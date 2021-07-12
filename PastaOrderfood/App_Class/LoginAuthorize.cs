@@ -6,15 +6,11 @@ using System.Web.Mvc;
 
 namespace PastaOrderfood.Account
 {
-    /// <summary>
-    /// 自定義權限 Filter
-    /// </summary>
+    // 自定義權限 Filter
     public class LoginAuthorize : AuthorizeAttribute
     {
         public string RoleNo { get; set; } = "";
-        /// <summary>
-        /// 覆寫 Authorize 設定
-        /// </summary>
+        // 覆寫 Authorize 設定
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {

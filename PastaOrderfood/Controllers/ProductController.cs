@@ -45,13 +45,30 @@ namespace PastaOrderfood.Controllers
         [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult ProductManageCreate()
         {
+
+            #region 接單下拉式表單
+
+            var cG = db.Categories.OrderBy(m => m.category_id).ToList();
+            var selectList = new List<SelectListItem>();
+            foreach (var item in cG)
+            {
+                //將資料庫資料加入選擇
+                selectList.Add(new SelectListItem
+                {
+                    Text = item.category_name,
+                    Value = item.category_id.ToString()
+                });
+            }
+
+            ViewBag.SelectList = selectList;
+            #endregion
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [LoginAuthorize(RoleNo = "Admin")]
-        public ActionResult ProductManageCreate(Pastas c)
+        public ActionResult ProductManageCreate(Pastas c,int categories_id)
         {
             if (!ModelState.IsValid) return View(c);
 
@@ -62,7 +79,7 @@ namespace PastaOrderfood.Controllers
             c.pasta_img = "/Image/" + fileName;
             fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
             c.ImageFile.SaveAs(fileName);
-
+            c.category_id = categories_id;
             db.Pastas.Add(c);
             db.SaveChanges();
 
@@ -81,6 +98,22 @@ namespace PastaOrderfood.Controllers
         [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult ProductManageEdit(int rowid)
         {
+            #region 接單下拉式表單
+
+            var cG = db.Categories.OrderBy(m => m.category_id).ToList();
+            var selectList = new List<SelectListItem>();
+            foreach (var item in cG)
+            {
+                //將資料庫資料加入選擇
+                selectList.Add(new SelectListItem
+                {
+                    Text = item.category_name,
+                    Value = item.category_id.ToString()
+                });
+            }
+
+            ViewBag.SelectList = selectList;
+            #endregion
             var user = db.Pastas.Where(m => m.rowid == rowid).FirstOrDefault();
             return View(user);
         }
@@ -88,16 +121,16 @@ namespace PastaOrderfood.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [LoginAuthorize(RoleNo = "Admin")]
-        public ActionResult ProductManageEdit(Pastas c)
+        public ActionResult ProductManageEdit(Pastas c,int categories_id)
         {
-
+            if (!ModelState.IsValid) return View(c);
             string fileName = Path.GetFileNameWithoutExtension(c.ImageFile.FileName);
             string extension = Path.GetExtension(c.ImageFile.FileName);
             fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
             c.pasta_img = "/Image/" + fileName;
             fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
             c.ImageFile.SaveAs(fileName);
-
+            c.category_id = categories_id;
             int rowid = c.rowid;
             var pastas = db.Pastas.Where(m => m.rowid == rowid).FirstOrDefault();
             pastas.rowid = c.rowid;
