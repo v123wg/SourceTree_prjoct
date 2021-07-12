@@ -208,6 +208,7 @@
     <Content Include="bg\b_2.jpg" />
     <Content Include="bg\g1.jpg" />
     <Content Include="bg\g2.jpg" />
+    <Content Include="bg\icon.png" />
     <Content Include="bg\lr.jpg" />
     <Content Include="bg\p_1.png" />
     <Content Include="bg\p_2.png" />
