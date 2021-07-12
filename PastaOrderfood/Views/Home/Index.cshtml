@@ -80,6 +80,8 @@
                 }
     </style>
 }
+
+
 <div class="carousel slide " data-ride="carousel" id="Picshow" data-interval="8000">
     <ul class="carousel-indicators ">
         <li data-target="#Picshow" data-slide-to="0" class="active ctrlLine">
@@ -98,7 +100,7 @@
                             </figure>
                         </div>
                         <div class="col-sm-6 col-12 text-sm-left ">
-                            <p class="display-2 ">Lorem<span class="d-none d-sm-block">立即訂購!!</span></p>
+                            <p class="display-2 ">特色Pizza!<span class="d-none d-sm-block">手工現做。</span></p>
                             @Html.ActionLink("Order!", "Menu", "Home", new { @class = "btn btn-outline-success btn-lg" })
                         </div>
                     </div>
@@ -117,7 +119,7 @@
                             </figure>
                         </div>
                         <div class="col-sm-6 col-12 text-sm-left ">
-                            <p class="display-2 ">Lorem<span class="d-none d-sm-block">立即訂購!!</span></p>
+                            <p class="display-2 ">就是好吃!<span class="d-none d-sm-block">Pizza店。</span></p>
                             @Html.ActionLink("Order!", "Menu", "Home", new { @class = "btn btn-outline-success btn-lg" })
 
                         </div>
@@ -129,9 +131,9 @@
             <img src="~/bg/b_1.jpg" alt="" class="d-flex ">
             <div id="area">
                 <div class="carousel-caption pp">
-                    <h3>標題</h3>
+                    <h3>Pizza</h3>
 
-                    <p class="display-2 ">Lorem<span class="d-none d-sm-block">立即訂購!!</span></p>
+                    @*<p class="display-2 ">純手工Pizza、特色飲料與速食餐點<span class="d-none d-sm-block">立即訂購。</span></p>*@
 
                 </div>
             </div>
@@ -155,37 +157,67 @@
     </div>
 </div>
 
-<div class="container-fluid bg2">
-    <div class="row m-0  mt-2">
-        <div class="col-sm-6 col-md-4 offset-md-2  infoArea "><img src="~/bg/g1.jpg" alt="" class="img-fluid"></div>
-        <div class="col-sm-6 col-md-4 ">
-            <h2 class="mt-2 px-2 text-light">美集少個</h2>
-            <p class="text-light text-justify px-3 txtformat h5">
-                不簡時是從苦子出視質開是石廠樂半間食間精層，德取德人是去一本；張能全到變氣白毛人場喜，但機要備花，包地愛在
-            </p>
-        </div>
+
+<div class="row m-0  mt-2">
+    <div class="col-sm-6 col-md-4 offset-md-2  infoArea "><img src="~/bg/g1.jpg" alt="" class="img-fluid"></div>
+    <div class="col-sm-6 col-md-4 ">
+        <h2 class="mt-2 px-2 text-warning h3 font-weight-bold txtShadow border-bottom text-light">About us</h2>
+        <p class="text-light text-justify px-3 txtformat h5">
+            Pizza店提供您來自義大利特色的手工披薩。多種不同風味的薄脆皮披薩。Pizza,漢堡及特色飲料絕對能滿足您與朋友的味蕾。
+        </p>
     </div>
-    <hr class="text-light">
-    <div class="row m-0 mt-5">
-        <div class="col-sm-6 col-md-4 offset-md-2">
-            <h2 class="mt-2 px-2 text-light">美集少個</h2>
-            <p class="text-light text-justify px-3 txtformat h5">
-                不簡時是從苦子出視質開是石廠樂半間食間精層，德取德人是去一本；張能全到變氣白毛人場喜，但機要備花，包地愛在
-            </p>
-        </div>
-        <div class="col-sm-6 col-md-4 infoArea"> <img src="~/bg/g2.jpg" alt="" class="img-fluid"></div>
+</div>
+<hr class="text-light">
+<div class="row m-0 mt-5">
+    <div class="col-sm-6 col-md-4 offset-md-2">
+        <h2 class="mt-2 px-2 text-warning h3 font-weight-bold txtShadow border-bottom text-light">Now</h2>
+        <p class="text-light text-justify px-3 txtformat h5">
+            Pizza店開店至今已成為一間披薩愛好者皆知的披薩餐廳。
+        </p>
+    </div>
+    <div class="col-sm-6 col-md-4 infoArea"> <img src="~/bg/g2.jpg" alt="" class="img-fluid"></div>
+</div>
+
+
+
+
+
+
+
+<div class="row my-5 p-0 m-0">
+
+    <div class="col-12 col-lg-8 offset-lg-2">
+        <h2 class="text-warning h3 font-weight-bold txtShadow border-bottom text-light">
+            聯絡我們(google表單)
+        </h2>
+    </div>
+</div>
+<div class="row p-0 m-0 mb-5">
+    <div class="col-12 col-sm-4 offset-sm-2">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group ">
+                <input name="name" type="text" placeholder="姓名" required class="form-control" id="nameInput">
+            </div>
+            <div class="form-group">
+                <input name="email" type="email" placeholder="Email" required class="form-control" id="mailInput">
+            </div>
+            <div class="form-group">
+                <textarea name="message" placeholder="請輸入留言內容 100字以內" required maxlength="100" class="form-control" style="resize:none; height: 10vh" id="msgInput"></textarea>
+            </div>
+            <input type="submit" class="btn btn-success" value="寫好送出">
+        }
     </div>
 
-    <div class="row mt-5">
-        <div class="col text-center col-sm-6 offset-sm-3 border border-secondary border-right-0 border-left-0">
-            <h2 class="h3 mt-2 mb-3 text-light">NEW</h2>
-            <p class="h5 text-light">不簡時是從苦子出視質開是石廠樂半間食間精層，德取德人是去一本；張能全到變氣白毛人場喜，但機要備花，包地愛在</p>
+    <div class="col-12 col-sm-4">
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14458.382434687614!2d121.5169537!3d25.0477942!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xc34a31ce3a4abecb!2z6Ie65YyX6LuK56uZ!5e0!3m2!1szh-TW!2stw!4v1626072547135!5m2!1szh-TW!2stw" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
 </div>
-
-@{
+    @{
         Html.RenderPartial("_PartialFooter");
-}
+    }
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -95,3 +95,4 @@ D:\ProjectCode\ASP\PastaOrderfood\PastaOrderfood\bin\zh-Hant\System.Web.WebPages
 D:\ProjectCode\ASP\PastaOrderfood\PastaOrderfood\obj\Debug\PastaOrderfood.csproj.CopyComplete
 D:\ProjectCode\ASP\PastaOrderfood\PastaOrderfood\obj\Debug\PastaOrderfood.dll
 D:\ProjectCode\ASP\PastaOrderfood\PastaOrderfood\obj\Debug\PastaOrderfood.pdb
+D:\ProjectCode\ASP\PastaOrderfood\PastaOrderfood\obj\Debug\PastaOrderfood.csprojAssemblyReference.cache

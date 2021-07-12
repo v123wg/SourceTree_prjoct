@@ -19,6 +19,18 @@ namespace PastaOrderfood.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Index(string name,string email,string message)
+        {
+            if(name != null||email!=null||message!=null|| name != "" || email !=""|| message != "")
+            { 
+                     var url = "https://docs.google.com/forms/d/e/1FAIpQLScogXmtstisD5Rmv9dE9WFBURY7oRV5pZXoZd7Bwe6G0uCd5w/formResponse?entry.1039074177="+ name + "&entry.247815927=" + email + "&entry.965894881=" + message;
+                     return Redirect(url);
+            }
+            else {
+                return View();
+            }
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
