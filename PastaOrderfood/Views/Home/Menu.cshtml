@@ -74,6 +74,10 @@
                         $("#cartItem").text("(" + data.Counter + ")");
                         toastr.success("成功新增餐點到購物車", "Information");
                     }
+                    else{
+
+                        toastr.error("購物車內已有相同餐點", "Error");
+                    }
                 },
                 error: function () {
                     toastr.success("發生未預期錯誤", "Error");

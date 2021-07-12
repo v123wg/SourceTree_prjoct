@@ -61,7 +61,14 @@ namespace PastaOrderfood.Controllers
             }
             else
             {
+
                 cart = (List<OrderDetail>)Session["cart"];
+                //如果購物車重複餐點，送出false ，跳出
+                if (cart.Find(x => x.itemId == int.Parse(ItemId)) != null)
+                {
+                    return Json(new { Success = false }, JsonRequestBehavior.AllowGet);
+                }
+
                 cart.Add(new OrderDetail()
                 {
                     itemId = product[acount].rowid,
@@ -73,6 +80,7 @@ namespace PastaOrderfood.Controllers
             CartItem.CartCount = cart.Count();
 
             return Json(new { Success = true, Counter = cart.Count(), S = Session["cart"] }, JsonRequestBehavior.AllowGet);
+            
         }
 
 
