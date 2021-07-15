@@ -18,12 +18,29 @@ namespace PastaOrderfood.Controllers
         int pageSize = 5;
 
         // GET: Product
-        [LoginAuthorize(RoleNo = "Admin")]
+        //[LoginAuthorize(RoleNo = "Admin")]
         // GET: Admin/Manage
         public ActionResult ProductManageIndex(int page = 1)
         {
 
             int currentPage = page < 1 ? 1 : page;
+
+            #region 種類下拉式表單
+
+            var cG = db.Categories.OrderBy(m => m.category_id).ToList();
+            var selectList = new List<SelectListItem>();
+            foreach (var item in cG)
+            {
+                //將資料庫資料加入選擇
+                selectList.Add(new SelectListItem
+                {
+                    Text = item.category_name,
+                    Value = item.category_id.ToString()
+                });
+            }
+
+            ViewBag.SelectList = selectList;
+            #endregion
 
             var pastas = db.Pastas.Include("Categories").OrderBy(m => m.pasta_sort).ToList();
             var result = pastas.ToPagedList(currentPage, pageSize);
@@ -42,44 +59,26 @@ namespace PastaOrderfood.Controllers
                     return View(result);
             }
         }
-        [LoginAuthorize(RoleNo = "Admin")]
-        public ActionResult ProductManageCreate()
-        {
-
-            #region 接單下拉式表單
-
-            var cG = db.Categories.OrderBy(m => m.category_id).ToList();
-            var selectList = new List<SelectListItem>();
-            foreach (var item in cG)
-            {
-                //將資料庫資料加入選擇
-                selectList.Add(new SelectListItem
-                {
-                    Text = item.category_name,
-                    Value = item.category_id.ToString()
-                });
-            }
-
-            ViewBag.SelectList = selectList;
-            #endregion
-            return View();
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [LoginAuthorize(RoleNo = "Admin")]
-        public ActionResult ProductManageCreate(Pastas c,int categories_id)
+        //[LoginAuthorize(RoleNo = "Admin")]
+        public ActionResult ProductManageCreate(string name, int price, int quantity,string detail,int sort, HttpPostedFileBase ImageFile, int categories_id)
         {
-            if (!ModelState.IsValid) return View(c);
-
-
+            Pastas c = new Pastas();
+            c.ImageFile = ImageFile;
             string fileName = Path.GetFileNameWithoutExtension(c.ImageFile.FileName);
             string extension = Path.GetExtension(c.ImageFile.FileName);
             fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
             c.pasta_img = "/Image/" + fileName;
             fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
             c.ImageFile.SaveAs(fileName);
+            c.pasta_name = name;
             c.category_id = categories_id;
+            c.pasta_price = price;
+            c.pasta_quantity = quantity;
+            c.pasta_detail = detail;
+            c.pasta_sort = sort;
             db.Pastas.Add(c);
             db.SaveChanges();
 
@@ -120,7 +119,7 @@ namespace PastaOrderfood.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [LoginAuthorize(RoleNo = "Admin")]
+        //[LoginAuthorize(RoleNo = "Admin")]
         public ActionResult ProductManageEdit(Pastas c,int categories_id)
         {
             if (!ModelState.IsValid) return View(c);
@@ -147,7 +146,7 @@ namespace PastaOrderfood.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [LoginAuthorize(RoleNo = "Admin")]
+        //[LoginAuthorize(RoleNo = "Admin")]
         public ActionResult ProductManageDeleteSelected(int[] rowid)
         {
             if (rowid == null)
@@ -166,7 +165,7 @@ namespace PastaOrderfood.Controllers
 
 
         [HttpPost]
-        [LoginAuthorize(RoleNo = "Admin")]
+        //[LoginAuthorize(RoleNo = "Admin")]
         public JsonResult GetProductSearchData(string SearchBy, string SearchValue)
         {
             PageList.SearchPastasBy = SearchBy;
@@ -183,10 +182,13 @@ namespace PastaOrderfood.Controllers
         {
             return View();
         }
+
+
         [HttpPost]
-        public ActionResult ProductCategoriesCreate(Categories c)
+        public ActionResult ProductCategoriesCreate(string CategoriesName)
         {
-            if (!ModelState.IsValid) return View(c);
+            Categories c = new Categories();
+            c.category_name = CategoriesName;
             db.Categories.Add(c);
             db.SaveChanges();
 
@@ -199,8 +201,11 @@ namespace PastaOrderfood.Controllers
             db.SaveChanges();
             return RedirectToAction("ProductCategoriesIndex");
         }
-        public ActionResult ProductCategoriesEdit(int category_id)
+        [HttpPost]
+        public ActionResult ProductCategoriesEdit(int category_id,string newCategoriesName)
         {
+            Categories c = new Categories();
+            c.category_name = newCategoriesName;
             var categories = db.Categories.Where(m => m.category_id == category_id).FirstOrDefault();
             return View(categories);
         }

@@ -56,7 +56,55 @@
     <br />
     <div>
         @Html.ActionLink("+種類", "ProductCategoriesIndex", "Product", null, new { @class = "btn btn-primary " })
-        @Html.ActionLink("新增餐點", "ProductManageCreate", "Product", null, new { @class = "btn btn-primary " })
+        @*@Html.ActionLink("新增餐點", "ProductManageCreate", "Product", null, new { @class = "btn btn-primary " })*@
+        <!-- #region popup 新增餐點 -->
+        <!-- #region popup 新增餐點 -->
+        <a href="#" class="btn btn-primary giveId"  data-toggle="modal" data-target="#popup">+新增</a>
+        <div class="modal fade" id="popup">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary"><p class="text-light h4 ">變更種類</p></div>
+                    @using (Html.BeginForm("ProductManageCreate", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="form-group">
+                        名稱 : <input placeholder="請輸入餐點名稱" type="text" name="name" value="" required>
+                    </div>
+                    <div class="form-group">
+                        價錢 : <input placeholder="請輸入餐點價錢" type="text" name="price" value="" oninput="value=value.replace(/[^\d]/g,'')" required>
+                    </div>
+                    <div>
+                        種類 : @Html.DropDownList("categories_id", (IEnumerable<SelectListItem>)ViewBag.SelectList)
+                    </div>
+                    <div class="form-group">
+                        數量 : <input placeholder="請輸入數量" type="text" name="quantity" value="" oninput="value=value.replace(/[^\d]/g,'')" required>
+                    </div>
+                    <div class="form-group">
+                        餐點說明 : <input placeholder="請輸入餐點說明" type="text" name="detail" value="" required>
+                    </div>
+                    <div class="form-group">
+                        排序 : <input placeholder="請輸入排序順位" type="text" name="sort" value="" oninput="value=value.replace(/[^\d]/g,'')" required>
+                    </div>
+                    <div class="col-md-10 centerblock">
+                        <input type="file" name="ImageFile" required>
+                    </div>
+                </div>
+                        <div class="modal-footer">
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="新增" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- #endregion -->
+        <!-- #endregion -->
+
+
     </div>
     <br />
     <div id="tpg">

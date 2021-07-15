@@ -131,7 +131,7 @@
                         <div class="modal fade" id="popup">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <div class="modal-header">變更狀態</div>
+                                    <div class="modal-header bg-primary"><p class="text-light h4 ">變更狀態</p></div>
                                     @using (Html.BeginForm("OrderStatusEdit", "Order", FormMethod.Post, new { enctype = "multipart/form-data" }))
                                     {
                                         @Html.AntiForgeryToken()

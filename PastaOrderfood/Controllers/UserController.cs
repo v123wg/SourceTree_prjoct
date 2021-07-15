@@ -82,7 +82,7 @@ namespace PastaOrderfood.Controllers
 
             Users user = new Users();
             user.mno = model.mno;
-            user.mno = model.mname;
+            user.mname = model.mname;
             user.password = model.password;
             user.email = model.email;
             user.birthday = model.birthday;

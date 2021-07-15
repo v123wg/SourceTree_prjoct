@@ -85,7 +85,9 @@
                         <td>@Item.remark</td>
                         <td>@Item.isvarify</td>
                         <td>
-                            @Html.ActionLink("編輯", "UserManageEdit", new { rowid = Item.rowid }, new { @class = "btn btn-info" }) 
+                            
+
+                            @Html.ActionLink("編輯", "UserManageEdit", new { rowid = Item.rowid }, new { @class = "btn btn-info" })
                             @Html.ActionLink("刪除", "UserManageDelete", new { rowid = Item.rowid }, new { @class = "btn btn-danger" })
                         </td>
                     </tr>

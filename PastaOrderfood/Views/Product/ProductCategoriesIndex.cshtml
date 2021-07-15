@@ -3,16 +3,53 @@
 @{
     ViewBag.Title = "ProductCategoriesIndex";
     Layout = "~/Views/Shared/_LayoutBackend.cshtml";
+    var add = Model.Count() + 1;
+}
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            //綁定 click
+            $(".giveId").on("click", function () {
+                console.log("giveId");
+                $(".needId").attr("value", $(this).attr("id"));
+            });
+        })
+    </script>
 }
 
 <h2 class="text-center">餐點總類</h2>
 
-
 <div class="container mt-5">
     <div class="row mb-3">
         <div class="col-8 text-left m-0 p-0">
-            @Html.ActionLink("+新增", "ProductCategoriesCreate", "Product", new { @class = "btn btn-primary  " })
-
+            @*@Html.ActionLink("+新增", "ProductCategoriesCreate", "Product", new { @class = "btn btn-primary  " })*@
+            <!-- #region popup 新增種類 -->
+            <a href="#" class="btn btn-primary giveId" id="@add" data-toggle="modal" data-target="#popup">+新增</a>
+            <div class="modal fade" id="popup">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary"><p class="text-light h4 ">新增種類</p></div>
+                        @using (Html.BeginForm("ProductManageCreate", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="modal-body">
+                                <p>新增ID : @add</p>
+                                <div class="form-group">
+                                    種類 : <input placeholder="請輸入種類名稱" type="text" name="CategoriesName" value="" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="新增" class="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- #endregion -->
         </div>
         <div class="col-4">
         </div>
@@ -30,8 +67,39 @@
                     <div class="col-4 mt-2">@item.category_id</div>
                     <div class="col-4 mt-2">@item.category_name</div>
                     <div class="col-4 mt-2 ">
-                        @Html.ActionLink("編輯", "ProductCategoriesEdit", new { category_id = item.category_id }, new { @class = "btn btn-info" })
-                        @*@Html.ActionLink("刪除", "ProductCategoriesDelete", new { category_id = item.category_id }, new { @class = "btn btn-danger" })*@
+                        <!-- #region popup 編輯種類 -->
+                        <a href="#" class="btn btn-info giveId" id="@item.category_id" data-toggle="modal" data-target="#popupUpDate">編輯</a>
+                        <div class="modal fade text-left" id="popupUpDate">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-info"><p class="text-light h4 ">編輯種類</p></div>
+                                    @using (Html.BeginForm("ProductCategoriesEdit", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div class="modal-body">
+                                            <div class="form-group ">
+                                                訂單編號:<input class="needId" type="text" name="category_id" value="" readonly="readonly" style="border-style:none">
+                                            </div>
+                                            <span>
+                                                新的種類名稱:
+                                            </span>
+                                            <input placeholder="更改過後的種類名稱" type="text" name="newCategoriesName" value="">
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="form-group">
+                                                <div class="col-md-offset-2 col-md-10">
+                                                    <input type="submit" value="更改" class="btn btn-primary" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <!-- #endregion -->
+                        @*@Html.ActionLink("編輯", "ProductCategoriesEdit", new { category_id = item.category_id }, new { @class = "btn btn-info" })
+                            @Html.ActionLink("刪除", "ProductCategoriesDelete", new { category_id = item.category_id }, new { @class = "btn btn-danger" })*@
                     </div>
                     <hr />
                 }
