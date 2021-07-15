@@ -31,12 +31,7 @@ namespace PastaOrderfood.Controllers
                 return View();
             }
         }
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
 
         public ActionResult Contact()
         {
@@ -94,7 +89,18 @@ namespace PastaOrderfood.Controllers
             return Json(new { Success = true, Counter = cart.Count(), S = Session["cart"] }, JsonRequestBehavior.AllowGet);
             
         }
+        public JsonResult removeCart(string ItemId)
+        {
+            int check;
+            bool conversionSuccessful = int.TryParse(ItemId, out check);
+            cart = (List<OrderDetail>)Session["cart"];
+            cart.RemoveAt(check);
+            Session["cart"] = cart;
+            CartItem.CartCount = cart.Count();
 
+            return Json(new { Success = true, Counter = cart.Count(), S = Session["cart"] }, JsonRequestBehavior.AllowGet);
+
+        }
 
         [HttpPost]
         public JsonResult GetCategoriesSearchData(string SearchValue)
@@ -123,6 +129,8 @@ namespace PastaOrderfood.Controllers
             Session.Remove("cart");
             return RedirectToAction("Menu");
         }
+
+        
 
         public ActionResult Cart()
         {

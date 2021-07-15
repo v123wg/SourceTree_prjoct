@@ -23,7 +23,36 @@
         })
                 //#endregion
 
+        //#region   刪除購物車
+        function removeCart(item) {
+            var itemId = $(item).attr("itemid");
+            var formData = new FormData();
+            formData.append("ItemId", itemId);
+            $.ajax({
+                async: true,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                data: formData,
+                url: "removeCart",
+                success: function (data) {
+                    if (data.Success) {
+                        $("#cartItem").text("(" + data.Counter + ")");
+                        toastr.success("成功刪除餐點到購物車", "Information");
+                        $("#tpg").load(location.href + " #tpg");
+                    }
+                    else {
 
+                        toastr.error("未知錯誤", "Error");
+                    }
+                },
+                error: function () {
+                    toastr.error("發生未預期錯誤", "Error");
+                    alert("There is some problem.");
+                }
+            });
+        }
+        //#endregion
 
     </script>
 
@@ -33,27 +62,32 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="container mt-5 ">
+    <div class="container mt-5 " id="tpg">
         <div class="row bg-light">
             <div class="col-12 text-center ">
                 <div class="row bg-info">
                     <div class="col-3 text-light h4">餐點</div>
                     <div class="col-3 text-light h4">圖片</div>
-                    <div class="col-3 text-light h4">數量</div>
-                    <div class="col-3 text-light h4">單價</div>
+                    <div class="col-2 text-light h4">數量</div>
+                    <div class="col-2 text-light h4">單價</div>
+                    <div class="col-1 text-light h4">刪除</div>
+
                 </div>
-                <div class="row text-center">
+                <div class="row text-center " >
 
                     @foreach (var item in Model)
                     {
                         <div class="col-3 mt-3">@item.pasta_name</div>
                         <div class="col-3 "><img src="@item.pasta_img" width="75" height="75" multiple /></div>
-                        <div class="col-3 mt-3">
+                        <div class="col-2 mt-3">
                             <input class="min" type="button" value="-" />
-                            <input id="text_box" name="q" type="text" value="1" style="width:30px;text-align: center" readonly="readonly"/>
+                            <input id="text_box" name="q" type="text" value="1" style="width:30px;text-align: center" readonly="readonly" />
                             <input class="add" type="button" value="+" />
                         </div>
-                        <div class="col-3 mt-3">@item.unitprice</div>
+                        <div class="col-2 mt-3">@item.unitprice</div>
+                        <div class="col-1 mt-3">
+                            <input type="button" name="X" value="X" class="btn btn-outline-secondary" itemid="@item.rowid" id="btnAddToCart" onclick="removeCart(this)" />
+                        </div>
                         <hr />
                     }
 
