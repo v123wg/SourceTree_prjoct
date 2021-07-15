@@ -29,7 +29,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header bg-primary"><p class="text-light h4 ">新增種類</p></div>
-                        @using (Html.BeginForm("ProductManageCreate", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        @using (Html.BeginForm("ProductCategoriesCreate", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             @Html.AntiForgeryToken()
                             <div class="modal-body">

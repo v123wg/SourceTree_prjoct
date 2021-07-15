@@ -25,7 +25,7 @@ namespace PastaOrderfood.Models
         public Nullable<int> pasta_sort { get; set; }
         public Nullable<int> pasta_Top { get; set; }
     
-        public  Categories Categories { get; set; }
+        public Categories Categories { get; set; }
 
         public HttpPostedFileBase ImageFile { get; set; }
     }

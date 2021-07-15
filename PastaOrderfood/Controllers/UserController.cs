@@ -111,13 +111,13 @@ namespace PastaOrderfood.Controllers
 
         private string SendVerifyMail(string userEmail, string varifyCode)
         {
-            string str_app_name = "標頭:PastaOrderFood";
+            string str_app_name = "PastaOrderFood ";
             var str_url = string.Format("/User/VerifyEmail/{0}", varifyCode);
             var str_link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, str_url);
             string str_subject = str_app_name + "Email認證";
             string str_body = "<br/><br/>";
-            str_body += "" + str_app_name + " 帳戶已經成功建立. <br/>";
-            str_body += "請按下下方連結完成驗證您的帳號程序!!<br/><br/>";
+            str_body += "" + str_app_name + "帳戶已經成功建立<br/>";
+            str_body += "下方連結完成驗證!!<br/><br/>";
             str_body += "<a href='" + str_link + "'>" + str_link + "</a> ";
             str_body += "<br/><br/>";
             str_body += "本信件由電腦系統自動寄出,請勿回信!!<br/><br/>";

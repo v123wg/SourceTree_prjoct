@@ -32,8 +32,6 @@
     <Property Name="itemId" Type="int" />
     <Property Name="quantity" Type="int" />
   </EntityType>
-  <!--產生期間發現錯誤:
-警告 6002: 資料表/檢視 'PastaOrder.dbo.OrderStatus' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
   <EntityType Name="OrderStatus">
     <Key>
       <PropertyRef Name="status_id" />
@@ -107,15 +105,10 @@
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pastas" EntityType="Self.Pastas" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OrderStatus].[status_id] AS [status_id], 
-    [OrderStatus].[fn] AS [fn]
-    FROM [dbo].[OrderStatus] AS [OrderStatus]</DefiningQuery>
-    </EntitySet>
     <AssociationSet Name="FK_OrderDetail_Order" Association="Self.FK_OrderDetail_Order">
       <End Role="Order" EntitySet="Order" />
       <End Role="OrderDetail" EntitySet="OrderDetail" />

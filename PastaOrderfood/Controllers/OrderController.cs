@@ -48,8 +48,8 @@ namespace PastaOrderfood.Controllers
                     order = db.Order.Include("OrderDetail").OrderBy(m => m.order_id).Where(m => m.order_id.ToString().Contains(PageList.SearchOrder)).ToList();
                     result = order.ToPagedList(currentPage, pageSize);
                     return View(result);
-                case "name":
-                    order = db.Order.Include("OrderDetail").OrderBy(m => m.order_id).Where(m => m.order_name.Contains(PageList.SearchOrder)).ToList();
+                case "status":
+                    order = db.Order.Include("OrderDetail").OrderBy(m => m.order_id).Where(m => m.order_status.Contains(PageList.SearchOrder)).ToList();
                     result = order.ToPagedList(currentPage, pageSize);
                     return View(result);
                 case "phone":

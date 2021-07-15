@@ -3,13 +3,20 @@
     ViewBag.Title = "VerifyEmail";
 }
 
+<div class="container text-center ">
+
+
 @if (ViewBag.Status)
 {
-    <p>恭喜你, 已經完成會員帳號驗證, 請重新登入!!</p>
+    <div class="col-12 ">
+        <p class='h4 text-light text-center'>恭喜你, 已經完成會員帳號驗證, 請重新登入!!</p>
+    </div>
 }
 else
 {
-    <p>@ViewBag.Message</p>
+    <div class="col-12 ">
+        <p class='h4 text-light text-center'>@ViewBag.Message</p>
+    </div>
 }
-
+</div>
 

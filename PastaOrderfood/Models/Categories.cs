@@ -24,6 +24,6 @@ namespace PastaOrderfood.Models
         public string category_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public  ICollection<Pastas> Pastas { get; set; }
+        public ICollection<Pastas> Pastas { get; set; }
     }
 }

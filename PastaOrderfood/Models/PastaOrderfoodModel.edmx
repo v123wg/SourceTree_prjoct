@@ -37,8 +37,6 @@
           <Property Name="itemId" Type="int" />
           <Property Name="quantity" Type="int" />
         </EntityType>
-        <!--產生期間發現錯誤:
-警告 6002: 資料表/檢視 'PastaOrder.dbo.OrderStatus' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
         <EntityType Name="OrderStatus">
           <Key>
             <PropertyRef Name="status_id" />
@@ -112,15 +110,10 @@
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pastas" EntityType="Self.Pastas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [OrderStatus].[status_id] AS [status_id], 
-    [OrderStatus].[fn] AS [fn]
-    FROM [dbo].[OrderStatus] AS [OrderStatus]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_OrderDetail_Order" Association="Self.FK_OrderDetail_Order">
             <End Role="Order" EntitySet="Order" />
             <End Role="OrderDetail" EntitySet="OrderDetail" />
@@ -135,9 +128,8 @@
     <edmx:ConceptualModels>
       <Schema Namespace="PastaOrderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="PastaOrderEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="OrderStatus" EntityType="PastaOrderModel.OrderStatus" />
           <EntitySet Name="Categories" EntityType="PastaOrderModel.Categories" />
-          <EntitySet Name="Order" EntityType="PastaOrderModel.Order" />
-          <EntitySet Name="OrderDetail" EntityType="PastaOrderModel.OrderDetail" />
           <EntitySet Name="Pastas" EntityType="PastaOrderModel.Pastas" />
           <EntitySet Name="Roles" EntityType="PastaOrderModel.Roles" />
           <EntitySet Name="Users" EntityType="PastaOrderModel.Users" />
@@ -145,12 +137,20 @@
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Pastas" EntitySet="Pastas" />
           </AssociationSet>
+          <EntitySet Name="Order" EntityType="PastaOrderModel.Order" />
+          <EntitySet Name="OrderDetail" EntityType="PastaOrderModel.OrderDetail" />
           <AssociationSet Name="FK_OrderDetail_Order" Association="PastaOrderModel.FK_OrderDetail_Order">
             <End Role="Order" EntitySet="Order" />
             <End Role="OrderDetail" EntitySet="OrderDetail" />
           </AssociationSet>
-          <EntitySet Name="OrderStatus" EntityType="PastaOrderModel.OrderStatus" />
         </EntityContainer>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="status_id" />
+          </Key>
+          <Property Name="status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="category_id" />
@@ -158,33 +158,6 @@
           <Property Name="category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="category_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Pastas" Relationship="PastaOrderModel.FK_Pastas_Categories" FromRole="Categories" ToRole="Pastas" />
-        </EntityType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="order_id" />
-          </Key>
-          <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="order_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="order_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="order_location" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="order_email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="order_date" Type="DateTime" Precision="3" />
-          <Property Name="order_status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="order_fn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="order_payFn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="order_total" Type="Int32" />
-          <Property Name="isLogin" Type="Int32" />
-          <NavigationProperty Name="OrderDetail" Relationship="PastaOrderModel.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
-        </EntityType>
-        <EntityType Name="OrderDetail">
-          <Key>
-            <PropertyRef Name="orderDetalid" />
-          </Key>
-          <Property Name="orderDetalid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="orderid" Type="Int32" />
-          <Property Name="itemId" Type="Int32" />
-          <Property Name="quantity" Type="Int32" />
-          <NavigationProperty Name="Order" Relationship="PastaOrderModel.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
         </EntityType>
         <EntityType Name="Pastas">
           <Key>
@@ -237,6 +210,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="order_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="order_location" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="order_email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="order_date" Type="DateTime" Precision="3" />
+          <Property Name="order_status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="order_fn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="order_payFn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="order_total" Type="Int32" />
+          <Property Name="isLogin" Type="Int32" />
+          <NavigationProperty Name="OrderDetail" Relationship="PastaOrderModel.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="orderDetalid" />
+          </Key>
+          <Property Name="orderDetalid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="orderid" Type="Int32" />
+          <Property Name="itemId" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="Order" Relationship="PastaOrderModel.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
+        </EntityType>
         <Association Name="FK_OrderDetail_Order">
           <End Type="PastaOrderModel.Order" Role="Order" Multiplicity="0..1" />
           <End Type="PastaOrderModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
@@ -249,51 +249,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="OrderStatus">
-          <Key>
-            <PropertyRef Name="status_id" />
-          </Key>
-          <Property Name="status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="fn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="PastaOrderModelStoreContainer" CdmEntityContainer="PastaOrderEntities">
+          <EntitySetMapping Name="OrderStatus">
+            <EntityTypeMapping TypeName="PastaOrderModel.OrderStatus">
+              <MappingFragment StoreEntitySet="OrderStatus">
+                <ScalarProperty Name="fn" ColumnName="fn" />
+                <ScalarProperty Name="status_id" ColumnName="status_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="PastaOrderModel.Categories">
               <MappingFragment StoreEntitySet="Categories">
                 <ScalarProperty Name="category_name" ColumnName="category_name" />
                 <ScalarProperty Name="category_id" ColumnName="category_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Order">
-            <EntityTypeMapping TypeName="PastaOrderModel.Order">
-              <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="isLogin" ColumnName="isLogin" />
-                <ScalarProperty Name="order_total" ColumnName="order_total" />
-                <ScalarProperty Name="order_payFn" ColumnName="order_payFn" />
-                <ScalarProperty Name="order_fn" ColumnName="order_fn" />
-                <ScalarProperty Name="order_status" ColumnName="order_status" />
-                <ScalarProperty Name="order_date" ColumnName="order_date" />
-                <ScalarProperty Name="order_email" ColumnName="order_email" />
-                <ScalarProperty Name="order_location" ColumnName="order_location" />
-                <ScalarProperty Name="order_phone" ColumnName="order_phone" />
-                <ScalarProperty Name="order_name" ColumnName="order_name" />
-                <ScalarProperty Name="order_id" ColumnName="order_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderDetail">
-            <EntityTypeMapping TypeName="PastaOrderModel.OrderDetail">
-              <MappingFragment StoreEntitySet="OrderDetail">
-                <ScalarProperty Name="quantity" ColumnName="quantity" />
-                <ScalarProperty Name="itemId" ColumnName="itemId" />
-                <ScalarProperty Name="orderid" ColumnName="orderid" />
-                <ScalarProperty Name="orderDetalid" ColumnName="orderDetalid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -338,11 +312,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OrderStatus">
-            <EntityTypeMapping TypeName="PastaOrderModel.OrderStatus">
-              <MappingFragment StoreEntitySet="OrderStatus">
-                <ScalarProperty Name="fn" ColumnName="fn" />
-                <ScalarProperty Name="status_id" ColumnName="status_id" />
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="PastaOrderModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="isLogin" ColumnName="isLogin" />
+                <ScalarProperty Name="order_total" ColumnName="order_total" />
+                <ScalarProperty Name="order_payFn" ColumnName="order_payFn" />
+                <ScalarProperty Name="order_fn" ColumnName="order_fn" />
+                <ScalarProperty Name="order_status" ColumnName="order_status" />
+                <ScalarProperty Name="order_date" ColumnName="order_date" />
+                <ScalarProperty Name="order_email" ColumnName="order_email" />
+                <ScalarProperty Name="order_location" ColumnName="order_location" />
+                <ScalarProperty Name="order_phone" ColumnName="order_phone" />
+                <ScalarProperty Name="order_name" ColumnName="order_name" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetail">
+            <EntityTypeMapping TypeName="PastaOrderModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="orderid" ColumnName="orderid" />
+                <ScalarProperty Name="orderDetalid" ColumnName="orderDetalid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
