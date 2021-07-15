@@ -22,7 +22,21 @@
         }
     </style>
 }
+@section scripts{
+    <!--datepicker-->
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script>
 
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "yy/mm/dd",
+                changeMonth: true,
+                changeYear: true,
+                maxDate: '0'
+            })
+        });
+    </script>
+}
 <div class=" m-5">
 
     <div class="container bg-light">
@@ -76,7 +90,7 @@
                         <div class="form-group">
                             <div class="centerblock">
                                 @Html.LabelFor(model => model.birthday, htmlAttributes: new { @class = "control-label " })
-                                @Html.EditorFor(model => model.birthday, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.birthday, new { htmlAttributes = new { @class = "form-control datepicker" } })
                                 @Html.ValidationMessageFor(model => model.birthday, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -102,3 +116,7 @@
 @{
     Html.RenderPartial("_PartialFooter");
 }
+
+<!--datepicker-->
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<link href="~/Content/JqDatepicker/jquery-ui.min.css" rel="stylesheet" />
