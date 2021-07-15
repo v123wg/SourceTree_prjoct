@@ -12,6 +12,7 @@ namespace PastaOrderfood.Controllers
 {
     public class HomeController : Controller
     {
+
         PastaOrderEntities db = new PastaOrderEntities();
         List<OrderDetail> cart;
         public ActionResult Index()
@@ -19,28 +20,24 @@ namespace PastaOrderfood.Controllers
             return View();
         }
 
+        #region google表單
         [HttpPost]
-        public ActionResult Index(string name,string email,string message)
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(string name, string email, string message)
         {
-            if(name != null||email!=null||message!=null|| name != "" || email !=""|| message != "")
-            { 
-                     var url = "https://docs.google.com/forms/d/e/1FAIpQLScogXmtstisD5Rmv9dE9WFBURY7oRV5pZXoZd7Bwe6G0uCd5w/formResponse?entry.1039074177="+ name + "&entry.247815927=" + email + "&entry.965894881=" + message;
-                     return Redirect(url);
+            if (name != null || email != null || message != null || name != "" || email != "" || message != "")
+            {
+                var url = "https://docs.google.com/forms/d/e/1FAIpQLScogXmtstisD5Rmv9dE9WFBURY7oRV5pZXoZd7Bwe6G0uCd5w/formResponse?entry.1039074177=" + name + "&entry.247815927=" + email + "&entry.965894881=" + message;
+                return Redirect(url);
             }
-            else {
+            else
+            {
                 return View();
             }
         }
+        #endregion
 
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        // GET: Pasta
+        //菜單(Menu) view 
         public ActionResult Menu()
         {
             var pastas = db.Pastas.Include("Categories").OrderBy(m => m.pasta_sort).ToList();
@@ -48,67 +45,15 @@ namespace PastaOrderfood.Controllers
             ViewBag.cate = db.Categories.OrderBy(m => m.category_id).ToList();
             return View(pastas);
         }
-        [HttpPost]
-        public JsonResult Menu(string ItemId)
-        {
-            int check;
-            bool conversionSuccessful = int.TryParse(ItemId, out check);
-            int acount = 0;
-            var product = db.Pastas.Where(m => m.rowid == check).ToList();
 
-            if (Session["cart"] == null )
-            {
-                cart = new List<OrderDetail>();
-                cart.Add(new OrderDetail()
-                {
-                    itemId = product[acount].rowid,
-                    quantity = 1
-                });
-                Session["cart"] = cart;
-            }
-            else
-            {
-
-                cart = (List<OrderDetail>)Session["cart"];
-                //如果購物車重複餐點，送出false ，跳出
-                if (cart.Find(x => x.itemId == int.Parse(ItemId)) != null)
-                {
-                    return Json(new { Success = false }, JsonRequestBehavior.AllowGet);
-                }
-
-                cart.Add(new OrderDetail()
-                {
-                    itemId = product[acount].rowid,
-                    quantity = 1
-                });
-                Session["cart"] = cart;
-                
-            }
-            CartItem.CartCount = cart.Count();
-
-            return Json(new { Success = true, Counter = cart.Count(), S = Session["cart"] }, JsonRequestBehavior.AllowGet);
-            
-        }
-        public JsonResult removeCart(string ItemId)
-        {
-            int check;
-            bool conversionSuccessful = int.TryParse(ItemId, out check);
-            cart = (List<OrderDetail>)Session["cart"];
-            cart.RemoveAt(check);
-            Session["cart"] = cart;
-            CartItem.CartCount = cart.Count();
-
-            return Json(new { Success = true, Counter = cart.Count(), S = Session["cart"] }, JsonRequestBehavior.AllowGet);
-
-        }
-
+        //菜單 Ajax種類查詢
         [HttpPost]
         public JsonResult GetCategoriesSearchData(string SearchValue)
         {
             List<Pastas> tBLPosts = new List<Pastas>();
             if (SearchValue == "all")
             {
-                tBLPosts = db.Pastas.OrderBy(m=>m.pasta_sort).ToList();
+                tBLPosts = db.Pastas.OrderBy(m => m.pasta_sort).ToList();
                 return Json(tBLPosts, JsonRequestBehavior.AllowGet);
             }
             try
@@ -120,18 +65,87 @@ namespace PastaOrderfood.Controllers
             {
                 Console.WriteLine("{0} is not Int", SearchValue);
             }
-            return Json( tBLPosts , JsonRequestBehavior.AllowGet);
+            return Json(tBLPosts, JsonRequestBehavior.AllowGet);
         }
 
+        #region 購物車
+        //ajax加入購物車
+        [HttpPost]
+        public JsonResult Menu(string ItemId)
+        {
 
+            int check;
+            bool conversionSuccessful = int.TryParse(ItemId, out check);
+            int acount = 0;
+            var product = db.Pastas.Where(m => m.rowid == check).ToList();
+
+            //if 購物車Session 未成立 ; else 購物車Session 成立。
+            if (Session["cart"] == null)
+            {
+                cart = new List<OrderDetail>();
+                //加入 Cart List
+                cart.Add(new OrderDetail()
+                {
+                    itemId = product[acount].rowid,
+                    quantity = 1
+                });
+                Session["cart"] = cart;
+            }
+            else
+            {
+
+                cart = (List<OrderDetail>)Session["cart"];
+                //如果購物車重複餐點，送回 Success = false
+                if (cart.Find(x => x.itemId == int.Parse(ItemId)) != null)
+                {
+                    return Json(new { Success = false }, JsonRequestBehavior.AllowGet);
+                }
+
+                cart.Add(new OrderDetail()
+                {
+                    itemId = product[acount].rowid,
+                    quantity = 1
+                });
+                Session["cart"] = cart;
+
+            }
+            //nav購物車數字
+            CartItem.CartCount = cart.Count();
+
+            return Json(new { Success = true, Counter = cart.Count(), S = Session["cart"] }, JsonRequestBehavior.AllowGet);
+        }
+
+        //刪除購物車-單項清除
+        [HttpPost]
+        public JsonResult removeCart(string ItemId)
+        {
+            int check;
+            bool conversionSuccessful = int.TryParse(ItemId, out check);
+            cart = (List<OrderDetail>)Session["cart"];
+            // List.RemoveAt()
+            cart.RemoveAt(check);
+            Session["cart"] = cart;
+            CartItem.CartCount = cart.Count();
+
+            return Json(new { Success = true, Counter = cart.Count(), S = Session["cart"] }, JsonRequestBehavior.AllowGet);
+        }
+
+        //刪除購物車-清除全部(useless)
         public ActionResult DeleteSession()
         {
             Session.Remove("cart");
             return RedirectToAction("Menu");
         }
+        //刪除購物車-清除全部(目前使用)
+        public ActionResult ClearCart()
+        {
+            Session.Remove("cart");
+            Session.Remove("cartStore");
+            Session.Remove("CartCount");
+            return RedirectToAction("Cart");
+        }
 
-        
-
+        //購物車(Cart) View
         public ActionResult Cart()
         {
             if (Session["cart"] != null)
@@ -165,7 +179,9 @@ namespace PastaOrderfood.Controllers
             return View(cartStore);
         }
 
+        //送出購物車內容，前往結帳
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Cart(List<string> q)
         {
             if (Session["cart"] != null)
@@ -181,7 +197,7 @@ namespace PastaOrderfood.Controllers
             List<Cart> cartStore = new List<Cart>();
             foreach (var item in cart)
             {
-                
+
                 result = db.Pastas.Where(m => m.rowid == item.itemId).ToList();
                 cartStore.Add(new Cart()
                 {
@@ -198,12 +214,13 @@ namespace PastaOrderfood.Controllers
             return RedirectToAction("Next");
         }
 
+        #endregion
 
-
-
-
+        #region 結帳
+        //填資料、確認資料(Next) View
         public ActionResult Next()
         {
+            //計算總價錢
             Session["total"] = "";
             int total = 0;
             List<Cart> cartStore = new List<Cart>();
@@ -221,8 +238,10 @@ namespace PastaOrderfood.Controllers
 
         }
 
+        //送出訂單資料
         [HttpPost]
-        public ActionResult Next(string name ,string fn ,string phone,string location_1, string location_2, string email,string payFn, string isLogin)
+        [ValidateAntiForgeryToken]
+        public ActionResult Next(string name, string fn, string phone, string location_1, string location_2, string email, string payFn, string isLogin)
         {
             OrderDetail od = new OrderDetail();
             List<Cart> cartStore = new List<Cart>();
@@ -252,15 +271,15 @@ namespace PastaOrderfood.Controllers
 
                 od.orderid = b;
                 od.itemId = item.itemId;
-                od.quantity =item.quantity;
+                od.quantity = item.quantity;
                 db.OrderDetail.Add(od);
                 db.SaveChanges();
             }
             SendthankMail(O.order_email);
             return RedirectToAction("thankOrder");
-
-
         }
+
+        //訂單後寄Email function
         private string SendthankMail(string userEmail)
         {
             string str_app_name = "標頭:PastaOrderFood";
@@ -279,21 +298,17 @@ namespace PastaOrderfood.Controllers
                 return gmail.MessageText;
             }
         }
+        //感謝(thankOrder) view
         public ActionResult thankOrder()
         {
+            //清除相關Session
             Session.Remove("total");
             Session.Remove("cartStore");
             Session.Remove("cart");
             Session.Remove("CartCount");
             return View();
         }
+        #endregion
 
-        public ActionResult ClearCart()
-        {
-            Session.Remove("cart");
-            Session.Remove("cartStore");
-            Session.Remove("CartCount");
-            return RedirectToAction("Cart");
-        }
     }
 }

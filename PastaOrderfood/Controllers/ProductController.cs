@@ -17,16 +17,13 @@ namespace PastaOrderfood.Controllers
         PastaOrderEntities db = new PastaOrderEntities();
         int pageSize = 5;
 
-        // GET: Product
-        //[LoginAuthorize(RoleNo = "Admin")]
-        // GET: Admin/Manage
+        [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult ProductManageIndex(int page = 1)
         {
 
             int currentPage = page < 1 ? 1 : page;
 
             #region 種類下拉式表單
-
             var cG = db.Categories.OrderBy(m => m.category_id).ToList();
             var selectList = new List<SelectListItem>();
             foreach (var item in cG)
@@ -62,7 +59,7 @@ namespace PastaOrderfood.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[LoginAuthorize(RoleNo = "Admin")]
+        [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult ProductManageCreate(string name, int price, int quantity,string detail,int sort, HttpPostedFileBase ImageFile, int categories_id)
         {
             Pastas c = new Pastas();
@@ -94,6 +91,7 @@ namespace PastaOrderfood.Controllers
             return RedirectToAction("ProductManageIndex");
         }
 
+
         [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult ProductManageEdit(int rowid)
         {
@@ -119,7 +117,7 @@ namespace PastaOrderfood.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[LoginAuthorize(RoleNo = "Admin")]
+        [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult ProductManageEdit(Pastas c,int categories_id)
         {
             if (!ModelState.IsValid) return View(c);
@@ -146,7 +144,7 @@ namespace PastaOrderfood.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[LoginAuthorize(RoleNo = "Admin")]
+        [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult ProductManageDeleteSelected(int[] rowid)
         {
             if (rowid == null)
@@ -165,7 +163,6 @@ namespace PastaOrderfood.Controllers
 
 
         [HttpPost]
-        //[LoginAuthorize(RoleNo = "Admin")]
         public JsonResult GetProductSearchData(string SearchBy, string SearchValue)
         {
             PageList.SearchPastasBy = SearchBy;

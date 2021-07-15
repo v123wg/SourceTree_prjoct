@@ -16,8 +16,8 @@ namespace PastaOrderfood.Areas.Admin.Controllers
         PastaOrderEntities db = new PastaOrderEntities();
         int pageSize = 5;
 
+        //UserManageIndex view
         [LoginAuthorize(RoleNo = "Admin")]
-        // GET: Admin/Manage
         public ActionResult UserManageIndex(int page = 1)
         {
             int currentPage = page < 1 ? 1 : page;
@@ -26,7 +26,6 @@ namespace PastaOrderfood.Areas.Admin.Controllers
             var result = user.ToPagedList(currentPage, pageSize);
             switch (PageList.SearchMemberBy)
             {
-
                 case "mno":
                     user = db.Users.OrderBy(m => m.rowid).Where(m => m.mno.Contains(PageList.SearchMember)).ToList();
                     result = user.ToPagedList(currentPage, pageSize);
@@ -49,23 +48,6 @@ namespace PastaOrderfood.Areas.Admin.Controllers
 
         }
         //PageList.SearchText
-
-        [LoginAuthorize(RoleNo = "Admin")]
-        public ActionResult UserManageCreate()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [LoginAuthorize(RoleNo = "Admin")]
-        public ActionResult UserManageCreate(Users c)
-        {
-            if (!ModelState.IsValid) return View(c);
-            db.Users.Add(c);
-            db.SaveChanges();
-
-            return RedirectToAction("UserManageIndex");
-        }
 
         [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult UserManageDelete(int rowid)
@@ -118,7 +100,6 @@ namespace PastaOrderfood.Areas.Admin.Controllers
             db.SaveChanges();
             return RedirectToAction("UserManageIndex");
         }
-
 
 
         [HttpPost]
