@@ -1,0 +1,39 @@
+﻿@model IEnumerable<PastaOrderfood.Models.Home_Carousel>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.context_computer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.context_phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.img)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.context_computer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.context_phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.img)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.rowid }) |
+            @Html.ActionLink("Details", "Details", new { id=item.rowid }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.rowid })
+        </td>
+    </tr>
+}
+
+</table>

@@ -13,19 +13,14 @@ namespace PastaOrderfood.Models
     using System.Collections.Generic;
     using System.Web;
 
-    public partial class Pastas
+    public partial class Home_Carousel
     {
         public int rowid { get; set; }
-        public string pasta_name { get; set; }
-        public Nullable<int> category_id { get; set; }
-        public Nullable<int> pasta_quantity { get; set; }
-        public string pasta_detail { get; set; }
-        public Nullable<int> pasta_price { get; set; }
-        public string pasta_img { get; set; }
-        public Nullable<int> pasta_sort { get; set; }
-        public Nullable<int> pasta_Top { get; set; }
-    
-        public  Categories Categories { get; set; }
+        public string context_computer { get; set; }
+        public string context_phone { get; set; }
+        public string img { get; set; }
+        public string img_bg { get; set; }
         public HttpPostedFileBase ImageFile { get; set; }
+        public HttpPostedFileBase ImageFile_bg { get; set; }
     }
 }

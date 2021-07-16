@@ -17,6 +17,8 @@ namespace PastaOrderfood.Controllers
         List<OrderDetail> cart;
         public ActionResult Index()
         {
+            var carousel = db.Home_Carousel.OrderBy(m=>m.rowid).ToList();
+            ViewBag.carousel = carousel;
             return View();
         }
 

@@ -25,12 +25,13 @@ namespace PastaOrderfood.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<OrderStatus> OrderStatus { get; set; }
+        public virtual DbSet<Home_Carousel> Home_Carousel { get; set; }
         public virtual DbSet<Categories> Categories { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetail { get; set; }
+        public virtual DbSet<OrderStatus> OrderStatus { get; set; }
         public virtual DbSet<Pastas> Pastas { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<Order> Order { get; set; }
-        public virtual DbSet<OrderDetail> OrderDetail { get; set; }
     }
 }

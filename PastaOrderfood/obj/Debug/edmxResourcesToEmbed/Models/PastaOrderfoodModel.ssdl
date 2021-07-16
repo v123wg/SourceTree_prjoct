@@ -7,6 +7,16 @@
     <Property Name="category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="category_name" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="Home_Carousel">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="context_computer" Type="nvarchar" MaxLength="50" />
+    <Property Name="context_phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="img" Type="nvarchar(max)" />
+    <Property Name="img_bg" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="Order">
     <Key>
       <PropertyRef Name="order_id" />
@@ -103,6 +113,7 @@
   </Association>
   <EntityContainer Name="PastaOrderModelStoreContainer">
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Home_Carousel" EntityType="Self.Home_Carousel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" Schema="dbo" store:Type="Tables" />

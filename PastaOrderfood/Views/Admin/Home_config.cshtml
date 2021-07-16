@@ -1,0 +1,144 @@
+﻿@model IEnumerable<PastaOrderfood.Models.Home_Carousel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutBackend.cshtml";
+}
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            //綁定 click
+            $(".giveId").on("click", function () {
+                console.log("giveId");
+                $(".needId").attr("value", $(this).attr("id"));
+            });
+        })
+    </script>
+}
+<div class="container">
+    <h2 class="text-center">輪播設定</h2>
+    <br />
+    <div>
+        <!-- #region popup 新增頁數 -->
+        <a href="#" class="btn btn-primary giveId" data-toggle="modal" data-target="#popup">增加</a>
+        <div class="modal fade text-center" id="popup">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary"><p class="text-light h4 ">增加輪播</p></div>
+                    @using (Html.BeginForm("Home_configCreate", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="modal-body">
+                            <div class="form-group">
+                                文字1(手機看不見) : <input placeholder="請輸入" type="text" name="context1" value="" required>
+                            </div>
+                            <div class="form-group">
+                                文字2 : <input placeholder="請輸入" type="text" name="context2" value="" required>
+                            </div>
+                            <div class="form-group">
+                                圖片 :
+                                <input type="file" name="ImageFile" required>
+                            </div>
+                            <div class="form-group">
+                                背景圖片 :
+                                <input type="file" name="ImageFile_bg" required>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="新增" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- #endregion -->
+
+
+    </div>
+    <br />
+    <div id="tpg">
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th>
+                        文字1(xl,sm看不見)
+                    </th>
+                    <th>
+                        文字2
+                    </th>
+                    <th>
+                        圖片
+                    </th>
+                    <th>
+                        背景圖片
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.context_computer)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.context_phone)
+                        </td>
+
+                        <td><img src="@item.img" width="50" height="50" multiple /></td>
+                        <td><img src="@item.img_bg" width="50" height="50" multiple /></td>
+                        <td>
+                            <!-- #region popup 編輯 -->
+                            <a href="#" class="btn btn-info giveId" id="@item.rowid" data-toggle="modal" data-target="#popupUpDate">編輯</a>
+                            <div class="modal fade text-left" id="popupUpDate">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-info"><p class="text-light h4 ">Update</p></div>
+                                        @using (Html.BeginForm("Home_configEdit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    ID : <input class="needId" type="text" name="id" value="" required readonly="readonly" style="border-style:none">
+                                                </div>
+                                                <div class="form-group">
+                                                    文字1(手機看不見) : <input placeholder="請輸入要更改的文字1" type="text" name="context1" value="" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    文字2 : <input placeholder="請輸入要更改的文字2" type="text" name="context2" value="" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    圖片 :
+                                                    <input type="file" name="ImageFile" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    背景圖片 :
+                                                    <input type="file" name="ImageFile_bg" required>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="form-group">
+                                                    <div class="col-md-offset-2 col-md-10">
+                                                        <input type="submit" value="更改" class="btn btn-primary" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- #endregion -->
+                            @Html.ActionLink("刪除", "Home_configDelete", new { id = item.rowid }, new { @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

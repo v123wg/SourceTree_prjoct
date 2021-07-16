@@ -77,7 +77,7 @@ namespace PastaOrderfood.Controllers
             return View();
         }
 
-
+        [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult OrderCreate(Order o)
         {
             if (!ModelState.IsValid) return View(o);
@@ -104,6 +104,7 @@ namespace PastaOrderfood.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult OrderEdit(Order o)
         {
@@ -149,8 +150,6 @@ namespace PastaOrderfood.Controllers
             return RedirectToAction("OrderIndex");
         }
 
-
-
         [LoginAuthorize(RoleNo = "Admin,Member")]
         public ActionResult UOrderIndex(int page = 1)
         {
@@ -184,8 +183,6 @@ namespace PastaOrderfood.Controllers
             return View(UOrderDetail);
         }
 
-
-
         public JsonResult GetOrderSearchData(string SearchBy, string SearchValue)
         {
             //將屬性設定成欲查詢對象
@@ -193,30 +190,6 @@ namespace PastaOrderfood.Controllers
             PageList.SearchOrder = SearchValue;
             return Json("");
         }
-
-
-
-
-
-        #region 丟棄的Action
-        /*
-                
-                *後台不應該能Create
-                [HttpPost]
-                [LoginAuthorize(RoleNo = "Admin")]
-                public ActionResult OrderCreate(Order o)
-                {
-                    if (!ModelState.IsValid) return View(o);
-                    db.Order.Add(o);
-                    db.SaveChanges();
-                    return RedirectToAction("OrderIndex");
-                }
-
-
-
-        */
-        #endregion
-
 
     }
 }

@@ -159,6 +159,9 @@
     <Compile Include="Models\Categories.cs">
       <DependentUpon>PastaOrderfoodModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Home_Carousel.cs">
+      <DependentUpon>PastaOrderfoodModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Order.cs">
       <DependentUpon>PastaOrderfoodModel.tt</DependentUpon>
     </Compile>
@@ -465,6 +468,8 @@
     <Content Include="Views\Order\OrderEdit.cshtml" />
     <Content Include="Views\Home\thankOrder.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />
+    <Content Include="Views\Home\Indextest.cshtml" />
+    <Content Include="Views\Admin\Home_config.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

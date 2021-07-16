@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="PastaOrderModelStoreContainer" CdmEntityContainer="PastaOrderEntities">
-    <EntitySetMapping Name="OrderStatus">
-      <EntityTypeMapping TypeName="PastaOrderModel.OrderStatus">
-        <MappingFragment StoreEntitySet="OrderStatus">
-          <ScalarProperty Name="fn" ColumnName="fn" />
-          <ScalarProperty Name="status_id" ColumnName="status_id" />
+    <EntitySetMapping Name="Home_Carousel">
+      <EntityTypeMapping TypeName="PastaOrderModel.Home_Carousel">
+        <MappingFragment StoreEntitySet="Home_Carousel">
+          <ScalarProperty Name="img_bg" ColumnName="img_bg" />
+          <ScalarProperty Name="img" ColumnName="img" />
+          <ScalarProperty Name="context_phone" ColumnName="context_phone" />
+          <ScalarProperty Name="context_computer" ColumnName="context_computer" />
+          <ScalarProperty Name="rowid" ColumnName="rowid" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -14,6 +17,41 @@
         <MappingFragment StoreEntitySet="Categories">
           <ScalarProperty Name="category_name" ColumnName="category_name" />
           <ScalarProperty Name="category_id" ColumnName="category_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order">
+      <EntityTypeMapping TypeName="PastaOrderModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="isLogin" ColumnName="isLogin" />
+          <ScalarProperty Name="order_total" ColumnName="order_total" />
+          <ScalarProperty Name="order_payFn" ColumnName="order_payFn" />
+          <ScalarProperty Name="order_fn" ColumnName="order_fn" />
+          <ScalarProperty Name="order_status" ColumnName="order_status" />
+          <ScalarProperty Name="order_date" ColumnName="order_date" />
+          <ScalarProperty Name="order_email" ColumnName="order_email" />
+          <ScalarProperty Name="order_location" ColumnName="order_location" />
+          <ScalarProperty Name="order_phone" ColumnName="order_phone" />
+          <ScalarProperty Name="order_name" ColumnName="order_name" />
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetail">
+      <EntityTypeMapping TypeName="PastaOrderModel.OrderDetail">
+        <MappingFragment StoreEntitySet="OrderDetail">
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="itemId" ColumnName="itemId" />
+          <ScalarProperty Name="orderid" ColumnName="orderid" />
+          <ScalarProperty Name="orderDetalid" ColumnName="orderDetalid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderStatus">
+      <EntityTypeMapping TypeName="PastaOrderModel.OrderStatus">
+        <MappingFragment StoreEntitySet="OrderStatus">
+          <ScalarProperty Name="fn" ColumnName="fn" />
+          <ScalarProperty Name="status_id" ColumnName="status_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -55,33 +93,6 @@
           <ScalarProperty Name="mname" ColumnName="mname" />
           <ScalarProperty Name="mno" ColumnName="mno" />
           <ScalarProperty Name="rowid" ColumnName="rowid" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Order">
-      <EntityTypeMapping TypeName="PastaOrderModel.Order">
-        <MappingFragment StoreEntitySet="Order">
-          <ScalarProperty Name="isLogin" ColumnName="isLogin" />
-          <ScalarProperty Name="order_total" ColumnName="order_total" />
-          <ScalarProperty Name="order_payFn" ColumnName="order_payFn" />
-          <ScalarProperty Name="order_fn" ColumnName="order_fn" />
-          <ScalarProperty Name="order_status" ColumnName="order_status" />
-          <ScalarProperty Name="order_date" ColumnName="order_date" />
-          <ScalarProperty Name="order_email" ColumnName="order_email" />
-          <ScalarProperty Name="order_location" ColumnName="order_location" />
-          <ScalarProperty Name="order_phone" ColumnName="order_phone" />
-          <ScalarProperty Name="order_name" ColumnName="order_name" />
-          <ScalarProperty Name="order_id" ColumnName="order_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="OrderDetail">
-      <EntityTypeMapping TypeName="PastaOrderModel.OrderDetail">
-        <MappingFragment StoreEntitySet="OrderDetail">
-          <ScalarProperty Name="quantity" ColumnName="quantity" />
-          <ScalarProperty Name="itemId" ColumnName="itemId" />
-          <ScalarProperty Name="orderid" ColumnName="orderid" />
-          <ScalarProperty Name="orderDetalid" ColumnName="orderDetalid" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

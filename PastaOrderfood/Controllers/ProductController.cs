@@ -170,18 +170,22 @@ namespace PastaOrderfood.Controllers
             return Json("");
         }
 
+        [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult ProductCategoriesIndex()
         {
             var categories = db.Categories.OrderBy(m => m.category_id).ToList();
             return View(categories);
         }
+
+        [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult ProductCategoriesCreate()
         {
             return View();
         }
-
-
+        
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult ProductCategoriesCreate(string CategoriesName)
         {
             Categories c = new Categories();
@@ -191,6 +195,8 @@ namespace PastaOrderfood.Controllers
 
             return RedirectToAction("ProductCategoriesIndex");
         }
+        
+        [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult ProductCategoriesDelete(int category_id)
         {
             var categories = db.Categories.Where(m => m.category_id == category_id).FirstOrDefault();
@@ -198,27 +204,17 @@ namespace PastaOrderfood.Controllers
             db.SaveChanges();
             return RedirectToAction("ProductCategoriesIndex");
         }
+        
         [HttpPost]
-        public ActionResult ProductCategoriesEdit(int category_id,string newCategoriesName)
-        {
-            Categories c = new Categories();
-            c.category_name = newCategoriesName;
-            var categories = db.Categories.Where(m => m.category_id == category_id).FirstOrDefault();
-            return View(categories);
-        }
-        [HttpPost]
+        [LoginAuthorize(RoleNo = "Admin")]
         [ValidateAntiForgeryToken]
-        public ActionResult ProductCategoriesEdit(Categories c)
+        public ActionResult ProductCategoriesEdit(int category_id, string newCategoriesName)
         {
-            int category_id = c.category_id;
-            var categories = db.Categories.Where(m => m.category_id == category_id).FirstOrDefault();
-            categories.category_name = c.category_name;
-
+            var c = db.Categories.Where(m => m.category_id == category_id).FirstOrDefault();
+            c.category_name = newCategoriesName;
             db.SaveChanges();
             return RedirectToAction("ProductCategoriesIndex");
         }
-
-
 
     }
 }
