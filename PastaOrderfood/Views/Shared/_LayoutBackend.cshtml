@@ -1,10 +1,7 @@
 ﻿@using PastaOrderfood.Account;
+@using PastaOrderfood.App_Class;
 @{
-    string str_header = "後台管理專區";
-    string str_controller = "Admin";
-    if (UserAccount.RoleNo == AppEnum.enUserRole.Member) { str_header = "會員專區"; str_controller = "Member"; }
-    //if (UserAccount.RoleNo == AppEnum.enUserRole.Vendor) { str_header = "廠商專區"; str_controller = "Vendor"; }
-    if (UserAccount.RoleNo == AppEnum.enUserRole.Admin) { str_header = "後台管理專區"; str_controller = "Admin"; }
+
 }
 
 <!DOCTYPE html>
@@ -27,44 +24,70 @@
     @RenderSection("css", required: false)
     @RenderSection("scripts", required: false)
     <style>
-        /*        body {
+        body {
             font-family: "Lato", sans-serif;
-        }*/
+        }
 
+        /* Fixed sidenav, full height */
         .sidenav {
             height: 100%;
-            width: 0;
+            width: 200px;
             position: fixed;
             z-index: 1;
             top: 0;
             left: 0;
             background-color: #111;
             overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
+            padding-top: 20px;
         }
 
-            .sidenav a {
-                padding: 8px 8px 8px 32px;
+            /* Style the sidenav links and the dropdown button */
+            .sidenav a, .dropdown-btn {
+                padding: 6px 8px 6px 16px;
                 text-decoration: none;
-                font-size: 25px;
+                font-size: 20px;
                 color: #818181;
                 display: block;
-                transition: 0.3s;
+                border: none;
+                background: none;
+                width: 100%;
+                text-align: left;
+                cursor: pointer;
+                outline: none;
             }
 
-                .sidenav a:hover {
+                /* On mouse-over */
+                .sidenav a:hover, .dropdown-btn:hover {
                     color: #f1f1f1;
                 }
 
-            .sidenav .closebtn {
-                position: absolute;
-                top: 0;
-                right: 25px;
-                font-size: 36px;
-                margin-left: 50px;
-            }
+        /* Main content */
+        .main {
+            margin-left: 200px; /* Same as the width of the sidenav */
+            font-size: 20px; /* Increased text to enable scrolling */
+            padding: 0px 10px;
+        }
 
+        /* Add an active class to the active dropdown button */
+        .active {
+            background-color: goldenrod;
+            color: white;
+        }
+
+        /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+        .dropdown-container {
+            display: none;
+            background-color: #262626;
+            padding-left: 8px;
+        }
+
+        /* Optional: Style the caret down icon */
+        .fa-caret-down {
+            float: right;
+            padding-right: 8px;
+        }
+
+        /* Some media queries for responsiveness */
         @@media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
@@ -74,81 +97,110 @@
                     font-size: 18px;
                 }
         }
-
-
-
         /*置中*/
         .centerblock {
             width: 275px;
             margin-left: auto;
             margin-right: auto;
         }
-
     </style>
     <script>
-        $(function () {
-            let leftNav = 0;
-            $(".side span").click(function () {
-                if (leftNav == 0) {
-                    $(this).html("X");
-                    $(".side").css({ "animation": "showIn 0.75s", "left": "0px" })
-                    $(this).css("color", "orange")
-                    leftNav = 1;
+        $(document).ready(function () {
+            var t =@backSetting.NavOn;
+            $("#d").hide();
+            $(".main").css("margin-left", 0);
+
+            $("#hide").click(function () {
+                if (t == 0) {
+                    console.log("bye");
+                    $("#d").fadeOut();
+                    $(".main").css("margin-left", 0);
+                    t = 1;
                 }
                 else {
-                    $(this).html("Open");
-                    $(".side").css({ "animation": "showOut 0.75s", "left": "-250px", "color": "" })
-                    $(this).css("color", "")
-                    leftNav = 0;
+                    console.log("hi");
+                    $("#d").fadeIn();
+                    $(".main").css("margin-left", 200);
+                    t = 0;
                 }
+            });
+            var dropdown = document.getElementsByClassName("dropdown-btn");
+            var i;
 
-
-            })
-
-        })
-
-
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "250px";
-        }
-
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0";
-        }
-
+            for (i = 0; i < dropdown.length; i++) {
+                dropdown[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var dropdownContent = this.nextElementSibling;
+                    if (dropdownContent.style.display === "block") {
+                        dropdownContent.style.display = "none";
+                    } else {
+                        dropdownContent.style.display = "block";
+                    }
+                });
+            }
+        });
     </script>
     <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 </head>
-<body class="p-0">
-
+<body class="p-0 main">
     <div class="navbar navbar-expand-lg navbar-light bg-light  ">
-        <a class="navbar-brand"><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span></a>
+        <a class="navbar-brand"><span id="hide" style="font-size:30px;cursor:pointer">&#9776; </span></a>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
+
                 <a href="#" class="nav-link">
+                    <a class="pl-2">訊息</a>
                     <i class="fa fa-user fa-lg text-info"></i> @UserAccount.UserName<b class="caret"></b>
                 </a>
             </li>
 
-
         </ul>
-        <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a title="左一下">@Html.ActionLink("輪播設定", "Home_config", "Admin", null, new { @style = "text-decoration:none;", @class = "fa fa-cog" })</a>
-            <a title="左一下">@Html.ActionLink("會員管理", "UserManageIndex", "Manage", null, new { @style = "text-decoration:none;", @class = "fa fa-address-book" })</a>
-            <a title="左一下">@Html.ActionLink("菜單管理", "ProductManageIndex", "Product", null, new { @style = "text-decoration:none;", @class = "fa fa-cutlery " })</a>
-            <a title="左一下">@Html.ActionLink("訂單管理", "OrderIndex", "Order", null, new { @style = "text-decoration:none;", @class = "fa fa-book" })</a>
-            <a title="左一下">@Html.ActionLink("返回首頁", "index", "Home", null, new { @style = "text-decoration:none;", @class = "fa fa-home" })</a>
-        </div>
+
 
     </div>
 
-
-
-    @*@if (UserAccount.RoleNo == AppEnum.enUserRole.Admin)
-        {@Html.Partial("~/Views/Shared/_PartialMenuAdmin.cshtml")}*@
     @RenderBody()
+
+<div class="sidenav" id="d">
+    <button class="dropdown-btn">
+        <i class="fa fa-caret-down"></i>
+        會員管理
+    </button>
+    <div class="dropdown-container">
+        @Html.ActionLink("會員管理", "UserManageIndex", "Manage", null, new { @class = "btn btn-primary" })
+    </div>
+
+    <button class="dropdown-btn">
+        <i class="fa fa-caret-down"></i>
+        菜單管理
+    </button>
+    <div class="dropdown-container">
+        @Html.ActionLink("菜單管理", "ProductManageIndex", "Product", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("種類", "ProductCategoriesIndex", "Product", null, new { @class = "btn btn-primary " })
+    </div>
+
+    <button class="dropdown-btn">
+        <i class="fa fa-caret-down"></i>
+        訂單管理
+    </button>
+    <div class="dropdown-container">
+        @Html.ActionLink("訂單管理", "OrderIndex", "Order", null, new { @class = "btn btn-primary" })
+
+    </div>
+
+    <button class="dropdown-btn">
+        <i class="fa fa-caret-down"></i>
+        首頁設定
+    </button>
+    <div class="dropdown-container">
+        <a class="btn btn-primary">輪播</a>
+        <a class="btn btn-primary">關於我們</a>
+
+    </div>
+
+</div>
+
 
 </body>
 </html>

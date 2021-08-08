@@ -17,6 +17,7 @@ namespace PastaOrderfood.Controllers
         PastaOrderEntities db = new PastaOrderEntities();
         int pageSize = 5;
 
+      
         [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult ProductManageIndex(int page = 1)
         {
@@ -43,7 +44,7 @@ namespace PastaOrderfood.Controllers
             var result = pastas.ToPagedList(currentPage, pageSize);
             switch (PageList.SearchPastasBy)
             {
-
+                //查詢 switch
                 case "name":
                     pastas = db.Pastas.Include("Categories").OrderBy(m => m.rowid).Where(m => m.pasta_name.Contains(PageList.SearchPastas)).ToList();
                     result = pastas.ToPagedList(currentPage, pageSize);
@@ -85,6 +86,7 @@ namespace PastaOrderfood.Controllers
         [LoginAuthorize(RoleNo = "Admin")]
         public ActionResult ProductManageDelete(int rowid)
         {
+            //找，刪除，存檔
             var pasta = db.Pastas.Where(m => m.rowid == rowid).FirstOrDefault();
             db.Pastas.Remove(pasta);
             db.SaveChanges();

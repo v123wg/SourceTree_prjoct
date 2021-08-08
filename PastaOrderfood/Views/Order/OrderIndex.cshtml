@@ -54,13 +54,12 @@
 
 
 <div class="container">
-    <h2 class="text-center">訂單管理</h2>
+    <h2 class="">訂單管理</h2>
     <br />
 
-    <div class="row m-0">
-        <label>搜尋</label>
-    </div>
-    <div class="row m-0">
+
+    <div class="row m-0 p-0">
+        <h5 class="m-0 pt-2">Search&nbsp;&nbsp;</h5>
         <select id="SearchBy" class="form-control">
             <option value="id">訂單ID</option>
             <option value="status">訂單狀態</option>
@@ -68,14 +67,16 @@
             <option value="email">Email</option>
             <option value="isLogin">是否登入</option>
         </select>
+        &nbsp;&nbsp;
         <div>
             <input class="form-control" placeholder="請輸入欲搜尋項目" id="Search" />
         </div>
+        
     </div>
 
     <br />
     <br />
-    <table class="table table-bordered" id="tpg">
+    <table class="table table-striped" id="tpg">
         <thead>
             <tr>
                 <th>
@@ -127,7 +128,7 @@
                         @*@Html.ActionLink("編輯", "OrderEdit", new { id = item.order_id }, new { @class = "btn btn-info" })*@
 
                         <!-- #region popup 改變狀態 -->
-                        <a href="#" class="btn btn-primary giveId" id="@item.order_id"  data-toggle="modal" data-target="#popup">狀態</a>
+                        <a href="#" class="btn btn-primary giveId" id="@item.order_id" data-toggle="modal" data-target="#popup">狀態</a>
                         <div class="modal fade" id="popup">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -169,6 +170,12 @@
         </tbody>
 
     </table>
+
+
+
+
+
+
     <div class="align-content-center" id="pgld">@Html.PagedListPager(Model, page => Url.Action("OrderIndex", new { page }))</div>
 
 

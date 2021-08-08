@@ -100,5 +100,14 @@ namespace goshopping.Areas.Admin.Controllers
 
             return RedirectToAction("Home_config");
         }
+
+
+        public ActionResult TestAdmin() {
+
+            return View();
+        
+        
+        }
+    
     }
 }

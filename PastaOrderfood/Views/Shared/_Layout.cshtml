@@ -15,6 +15,10 @@
     <link href="~/Content/toastr.min.css" rel="stylesheet" />
     <script src="@Url.Content("~/Scripts/bootstrap.js")"></script>
     <style>
+        .NavAction {
+            color: orangered;
+        }
+
         body {
             background-image: url('../../bg/bg_4.jpg');
             margin: 0;
@@ -24,7 +28,7 @@
         }
 
         /*footer單頁至底*/
-/*        footer {
+        /*        footer {
             position: absolute;
             bottom: 0;
             width: 100%;
@@ -56,30 +60,37 @@
         </div>
     </div>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
-        <a class="navbar-brand" href="/Home/Index"><i class="text-danger fa fa-coffee fa-lg" aria-hidden="true"></i>Pastas</a>
+    <nav class=" navbar navbar-expand-lg navbar-light bg-light fixed-top ">
+        <a class="navbar-brand " href="/Home/Index"><h1 class="text-info">PizzaHome</h1></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
+                <li class="nav-item pl-3">
                     <a class="nav-link" href="/Home/Index">
-                        Home
-                        <span class="sr-only">(current)</span>
+                        <h5 id="Home">
+                            Home
+                        </h5>
                     </a>
                 </li>
-                <li class="nav-item">
-                    @Html.ActionLink("Menu", "Menu", "Home", null, new { @class = "nav-link" })
+                <li class="nav-item pl-3 pr-3">
+                    <a class="nav-link" href="/Home/Menu">
+                        <h5 id="Menu">
+                            Menu
+                        </h5>
+                    </a>
+                    @*<h5> @Html.ActionLink("Menu", "Menu", "Home", null, new { @class = "nav-link ", id = "Menu" })</h5>*@
                 </li>
-                <li class="nav-item">
+                <li class="nav-item pl-3 pl-lg-0 pr-2">
                     @if (Session["CartCount"] == null)
                     {
-                        @Html.ActionLink(" ", "Cart", "Home", new { @class = "nav-link  text-info fa fa-shopping-cart fa-lg mt-1", id = "cartItem" })
+                        @Html.ActionLink(" ", "Cart", "Home", null, new { @class = "nav-link  text-info fa fa-shopping-cart fa-lg mt-1 h5", id = "cartItem" })
+
                     }
                     else
                     {
-                        @Html.ActionLink("(" + Session["CartCount"] + ")", "Cart", "Home", new { @class = "nav-link text-info fa fa-shopping-cart fa-lg mt-1", id = "cartItem" })
+                        @Html.ActionLink("(" + Session["CartCount"] + ")", "Cart", "Home", null, new { @class = "h5 nav-link text-info fa fa-shopping-cart fa-lg mt-1", id = "cartItem" })
                     }
                 </li>
                 @if (UserAccount.IsLogin)
@@ -91,17 +102,21 @@
                         <ul class="dropdown-menu">
                             @if (UserAccount.RoleNo == AppEnum.enUserRole.Admin)
                             {
-                                <li> @Html.ActionLink("後台", "Index", "Admin", null, new { @class = "dropdown-item" })</li>
+                                <li> @Html.ActionLink("後台", "Index", "Admin", null, new { @class = "dropdown-item h5" })</li>
                             }
-                            <li> @Html.ActionLink("訂單查詢", "UOrderIndex", "Order", null, new { @class = "dropdown-item" })</li>
-                            <li> @Html.ActionLink("Login Out", "LogOut", "User", null, new { @class = "dropdown-item" })</li>
+                            <li> @Html.ActionLink("訂單查詢", "UOrderIndex", "Order", null, new { @class = "dropdown-item h5" })</li>
+                            <li> @Html.ActionLink("Login Out", "LogOut", "User", null, new { @class = "dropdown-item h5" })</li>
                         </ul>
                     </li>
                 }
                 else
                 {
-                    <li class="nav-item">
-                        @Html.ActionLink("Login", "Login", "User", null, new { @class = "nav-link " })
+                    <li class="nav-item pl-3 pr-3">
+                        <a class="nav-link" href="/User/Login">
+                            <h5 id="Login">
+                                Login
+                            </h5>
+                        </a>
                     </li>
                 }
             </ul>
@@ -110,7 +125,6 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/Home/Index">PASTAS</a>
     </nav>
-
 
     @RenderBody()
 

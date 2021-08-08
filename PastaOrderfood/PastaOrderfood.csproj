@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Class\AppEnum.cs" />
+    <Compile Include="App_Class\backSetting.cs" />
     <Compile Include="App_Class\CartItem.cs" />
     <Compile Include="App_Class\Cryptographys.cs" />
     <Compile Include="App_Class\GmailService.cs" />
@@ -470,6 +471,8 @@
     <Content Include="Views\Shared\_PartialFooter.cshtml" />
     <Content Include="Views\Home\Indextest.cshtml" />
     <Content Include="Views\Admin\Home_config.cshtml" />
+    <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Admin\TestAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

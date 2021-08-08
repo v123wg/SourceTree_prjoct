@@ -39,7 +39,8 @@
                     if (data.Success) {
                         $("#cartItem").text("(" + data.Counter + ")");
                         toastr.success("成功刪除餐點到購物車", "Information");
-                        $("#tpg").load(location.href + " #tpg");
+                        //$("#tpg").load(location.href + " #tpg");
+                        window.location.reload();
                     }
                     else {
 
@@ -53,11 +54,13 @@
             });
         }
         //#endregion
-
+        $(document).ready(function () {
+            $("#cartItem").addClass("NavAction")
+        });
     </script>
 
 }
-<h2 class="text-center">Cart</h2>
+<h2 class="mt-5 text-center">購物車</h2>
 
 @using (Html.BeginForm())
 {
@@ -101,7 +104,7 @@
             </div>
 
             <div class="col-4 text-right m-0 p-0 ">
-                @Html.ActionLink("清空購物車", "ClearCart", "Home", new { @class = "btn btn-danger " })
+                @Html.ActionLink("清空購物車", "ClearCart", "Home",null, new { @class = "btn btn-danger " })
 
                 @if (ViewBag.token == false)
                 {

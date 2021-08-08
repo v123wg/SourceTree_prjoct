@@ -87,7 +87,9 @@
         }
         //#endregion
 
-
+        $(document).ready(function () {
+            $("#Menu").addClass("NavAction")
+        });
 
     </script>
 
@@ -95,6 +97,11 @@
 
 @section css{
     <style>
+        img {
+            width: 100%;
+            height: 200px;
+          /*400px phone*/  
+        }
 
         #SearchToken table tr td div a {
             cursor: pointer;
@@ -152,8 +159,8 @@
     </ul>
     <div class="carousel-inner">
 
-        <div class="carousel-item active ">
-            <img src="~/bg/b_1.jpg" alt="" class="d-flex ">
+        <div class="carousel-item active">
+            <img src="~/bg/b_1.jpg" alt="" class="d-flex">
             <div id="area">
                 <div class="carousel-caption pp">
                     <h1 class=" m-5">Menu</h1>
@@ -170,7 +177,7 @@
 
     <div class="row">
         <div class="col-xl-2 col-md-3 col-12  ">
-            <div class="offset-1  m-5" id="SearchToken">
+            <div class="  m-5" id="SearchToken">
                 <table class="table table-bordered text-center">
                     <tr>
                         <th class="p-0 m-0 bg-dark">
@@ -200,13 +207,13 @@
 
             @foreach (var item in Model)
             {
-                <div class="col-12 col-md-5 col-xl-3 border border-light m-1">
+                <div class="col-12 col-md-5 col-xl-3 border border-light ">
                     <h3 class="text-light">
                         @Html.DisplayFor(modelItem => item.pasta_name)
                     </h3>
                     <hr style=" border: solid gray; border-radius: 2px;">
                     <p>
-                        <img src="@Html.DisplayFor(modelItem => item.pasta_img)" class="img-fluid" multiple />
+                        <img src="@Html.DisplayFor(modelItem => item.pasta_img)" class="  " multiple />
                     </p>
                     <p class="text-light">
                         說明:@Html.DisplayFor(modelItem => item.pasta_detail)

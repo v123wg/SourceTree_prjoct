@@ -312,5 +312,14 @@ namespace PastaOrderfood.Controllers
         }
         #endregion
 
+
+
+        public ActionResult Test()
+        {
+
+            return View();
+        }
+
+
     }
 }
